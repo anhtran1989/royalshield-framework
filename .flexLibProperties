@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="royalshield.animators.Animator"/>
+    <classEntry path="royalshield.animators.utils.FrameDuration"/>
+    <classEntry path="royalshield.collections.IGameObjectContainer"/>
+    <classEntry path="royalshield.collections.IItemContainer"/>
+    <classEntry path="royalshield.combat.AreaCombat"/>
+    <classEntry path="royalshield.combat.AreaCombatType"/>
+    <classEntry path="royalshield.combat.MatrixArea"/>
+    <classEntry path="royalshield.combat.MatrixOperation"/>
+    <classEntry path="royalshield.core.GameAssets"/>
+    <classEntry path="royalshield.core.GameConsts"/>
+    <classEntry path="royalshield.core.RoyalShield"/>
+    <classEntry path="royalshield.core.royalshield_internal"/>
+    <classEntry path="royalshield.display.GameCanvas"/>
+    <classEntry path="royalshield.display.GameDisplay"/>
+    <classEntry path="royalshield.entities.GameObject"/>
+    <classEntry path="royalshield.entities.IDynamicGameObject"/>
+    <classEntry path="royalshield.entities.IGameObject"/>
+    <classEntry path="royalshield.entities.creatures.Creature"/>
+    <classEntry path="royalshield.entities.creatures.Monster"/>
+    <classEntry path="royalshield.entities.creatures.NPC"/>
+    <classEntry path="royalshield.entities.creatures.Player"/>
+    <classEntry path="royalshield.entities.items.Ground"/>
+    <classEntry path="royalshield.entities.items.Item"/>
+    <classEntry path="royalshield.errors.AbstractClassError"/>
+    <classEntry path="royalshield.errors.NullArgumentError"/>
+    <classEntry path="royalshield.errors.NullOrEmptyArgumentError"/>
+    <classEntry path="royalshield.errors.SingletonClassError"/>
+    <classEntry path="royalshield.geom.Direction"/>
+    <classEntry path="royalshield.geom.Position"/>
+    <classEntry path="royalshield.geom.Rect"/>
+    <classEntry path="royalshield.graphics.Effect"/>
+    <classEntry path="royalshield.graphics.Graphic"/>
+    <classEntry path="royalshield.graphics.GraphicType"/>
+    <classEntry path="royalshield.graphics.IGraphic"/>
+    <classEntry path="royalshield.graphics.IRenderable"/>
+    <classEntry path="royalshield.graphics.IUpdatable"/>
+    <classEntry path="royalshield.graphics.MagicEffect"/>
+    <classEntry path="royalshield.graphics.Missile"/>
+    <classEntry path="royalshield.graphics.Outfit"/>
+    <classEntry path="royalshield.signals.Signal"/>
+    <classEntry path="royalshield.textures.SpriteSheet"/>
+    <classEntry path="royalshield.utils.ClassUtil"/>
+    <classEntry path="royalshield.utils.CreatureChecker"/>
+    <classEntry path="royalshield.utils.CreatureStatusRenderer"/>
+    <classEntry path="royalshield.utils.GameUtils"/>
+    <classEntry path="royalshield.utils.IDestroyable"/>
+    <classEntry path="royalshield.utils.isNullOrEmpty"/>
+    <classEntry path="royalshield.utils.RenderHelper"/>
+    <classEntry path="royalshield.utils.ThingUpdater"/>
+    <classEntry path="royalshield.world.IWorldMap"/>
+    <classEntry path="royalshield.world.Tile"/>
+    <classEntry path="royalshield.world.TileFlags"/>
+    <classEntry path="royalshield.world.World"/>
+    <classEntry path="royalshield.world.WorldMap"/>
+    <classEntry path="royalshield.world.utils.AStarNode"/>
+    <classEntry path="royalshield.world.utils.AStarNodes"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
