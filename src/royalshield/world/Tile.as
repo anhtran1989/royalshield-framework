@@ -74,7 +74,7 @@ package royalshield.world
         public function queryAdd(thing:GameObject):Boolean
         {
             if (thing is Creature) {
-                if (hasFlag(TileFlags.SOLID))
+                if (hasFlag(TileFlags.SOLID) || m_firstCreature)
                     return false;
             }
             return true;
@@ -159,6 +159,7 @@ package royalshield.world
             
             m_creaturesCount++;
             creature.containerParent = this;
+            creature.position.setTo(m_x, m_y, m_z);
             return true;
         }
         
@@ -184,6 +185,7 @@ package royalshield.world
             creature.next = null;
             creature.prev = null;
             creature.containerParent = null;
+            creature.position.setEmpty();
             return true;
         }
         

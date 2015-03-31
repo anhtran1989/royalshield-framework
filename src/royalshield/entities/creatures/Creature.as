@@ -8,13 +8,16 @@ package royalshield.entities.creatures
     import royalshield.entities.GameObject;
     import royalshield.entities.IDynamicGameObject;
     import royalshield.geom.Direction;
+    import royalshield.geom.Position;
     import royalshield.graphics.IRenderable;
     import royalshield.graphics.IUpdatable;
     import royalshield.graphics.Outfit;
+    import royalshield.signals.Signal;
     import royalshield.utils.GameUtil;
     import royalshield.utils.IDestroyable;
     import royalshield.utils.isNullOrEmpty;
     import royalshield.world.Tile;
+    import royalshield.world.WorldMap;
     
     use namespace royalshield_internal;
     
@@ -50,10 +53,13 @@ package royalshield.entities.creatures
         private var m_elapsedTime:Number;
         private var m_directionList:Vector.<String>;
         private var m_direction:String;
+        private var m_position:Position;
         
         private var m_cancelNextWalk:Boolean;
         private var m_walkEvent:Boolean;
         private var m_lastStepTime:int;
+        
+        private var m_onWalkCompleteSignal:Signal;
         
         //--------------------------------------
         // Event Handlers
@@ -69,12 +75,10 @@ package royalshield.entities.creatures
             var oldSpeed:uint = this.speed;
             m_variableSpeed = value;
             
-            if (this.speed <= 0) {
+            if (this.speed <= 0)
                 stopEventWalk();
-                m_cancelNextWalk = true;
-            } else if (oldSpeed <= 0 && m_directionList.length == 0) {
+            else if (oldSpeed <= 0 && m_directionList.length == 0)
                 addEventWalk();
-            }
         }
         
         public function get outfit():Outfit { return m_outfit; }
@@ -109,6 +113,9 @@ package royalshield.entities.creatures
         public function get topParent():IGameObjectContainer { return containerParent; }
         public function get isWorldRemoved():Boolean { return worldRemoved; }
         public function get tile():Tile { return containerParent; }
+        public function get position():Position { return m_position; }
+        
+        public function get onWalkComplete():Signal { return m_onWalkCompleteSignal; }
         
         //--------------------------------------------------------------------------
         // CONSTRUCTOR
@@ -130,7 +137,10 @@ package royalshield.entities.creatures
             m_elapsedTime = 0;
             m_directionList = new Vector.<String>();
             m_direction = Direction.SOUTH;
+            m_position = new Position();
             worldRemoved = true;
+            
+            m_onWalkCompleteSignal = new Signal();
         }
         
         //--------------------------------------------------------------------------
@@ -183,7 +193,7 @@ package royalshield.entities.creatures
             
             m_directionList.length = 0;
             m_directionList[m_directionList.length] = direction;
-            addEventWalk(true);
+            addEventWalk();
         }
         
         public function startAutoWalk(directions:Vector.<String>, completeHandler:Function = null):Boolean
@@ -204,7 +214,7 @@ package royalshield.entities.creatures
                     m_directionList[i] = directions[i];
             }
             
-            addEventWalk(m_directionList.length == 1);
+            addEventWalk();
             return true;
         }
         
@@ -218,7 +228,29 @@ package royalshield.entities.creatures
             m_animationEnd = 0;
             m_movementEnd = 0;
             m_walking = false;
+            m_cancelNextWalk = false;
             m_directionList.length = 0;
+        }
+        
+        /**
+         * Increases/decreases a value to the current health.
+         * 
+         * @param value The amount of health to be changed.
+         */
+        public function changeHealth(value:int):void
+        {
+            m_health = Math.max(0, Math.min(m_healthMax, m_health + value));
+            m_heathPercent = GameUtil.getPercentValue(m_health, m_healthMax);
+        }
+        
+        public function canSeePosition(position:Position):Boolean
+        {
+            return canSee(m_position.x, m_position.y, position.x, position.y, WorldMap.MAX_VIEWPORT_X, WorldMap.MAX_VIEWPORT_Y);
+        }
+        
+        protected function canSeeCreature(creature:Creature):Boolean
+        {
+            return canSeePosition(creature.position);
         }
         
         public function onThink(interval:uint):void
@@ -301,7 +333,7 @@ package royalshield.entities.creatures
                     RoyalShield.getInstance().world.moveCreature(this, direction);
                 } else {
                     if (m_directionList.length == 0)
-                        onWalkComplete();
+                        m_onWalkCompleteSignal.dispatch();
                     
                     stopEventWalk();
                 }
@@ -309,6 +341,7 @@ package royalshield.entities.creatures
             
             if (m_cancelNextWalk) {
                 m_cancelNextWalk = false;
+                m_walkEvent = false;
                 m_directionList.length = 0;
                 onWalkAborted();
             }
@@ -333,7 +366,7 @@ package royalshield.entities.creatures
         // Protected
         //--------------------------------------
         
-        protected function addEventWalk(firstStep:Boolean = false):void
+        protected function addEventWalk():void
         {
             m_cancelNextWalk = false;
             
@@ -343,7 +376,7 @@ package royalshield.entities.creatures
         
         protected function stopEventWalk():void
         {
-            m_walkEvent = false;
+            m_cancelNextWalk = true;
         }
         
         protected function getStepDuration(direction:String = null):Number
@@ -393,11 +426,6 @@ package royalshield.entities.creatures
             return null;
         }
         
-        protected function onWalkComplete():void
-        {
-            
-        }
-        
         protected function onWalkAborted():void
         {
             
@@ -410,5 +438,10 @@ package royalshield.entities.creatures
         protected static const SPEED_A:Number = 857.36;
         protected static const SPEED_B:Number = 261.29;
         protected static const SPEED_C:Number = -4795.01;
+        
+        protected static function canSee(x1:int, y1:int, x2:int, y2:int, deltaX:int, deltaY:int):Boolean
+        {
+            return (Math.abs(x1 - x2) < deltaX && Math.abs(y1 - y2) < deltaY);
+        }
     }
 }
