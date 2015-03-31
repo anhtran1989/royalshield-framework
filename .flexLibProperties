@@ -20,6 +20,7 @@
     <classEntry path="royalshield.entities.IGameObject"/>
     <classEntry path="royalshield.entities.creatures.Creature"/>
     <classEntry path="royalshield.entities.creatures.Monster"/>
+	<classEntry path="royalshield.entities.creatures.MonsterType"/>
     <classEntry path="royalshield.entities.creatures.NPC"/>
     <classEntry path="royalshield.entities.creatures.Player"/>
     <classEntry path="royalshield.entities.items.Ground"/>

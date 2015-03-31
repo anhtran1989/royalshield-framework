@@ -114,10 +114,11 @@ package royalshield.entities.creatures
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function Creature(id:uint, name:String)
+        public function Creature()
         {
-            super(id, name);
+            super();
             
+            m_name = "Creature";
             m_healthMax = 100;
             m_health = m_healthMax;
             m_heathPercent = GameUtils.getPercentValue(m_health, m_healthMax);

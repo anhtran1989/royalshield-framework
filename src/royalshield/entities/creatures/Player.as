@@ -8,7 +8,9 @@ package royalshield.entities.creatures
         
         public function Player()
         {
-            super(0, "Player");
+            super();
+            
+            m_name = "Player";
         }
     }
 }

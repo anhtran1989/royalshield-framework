@@ -20,10 +20,11 @@ package royalshield.entities.creatures
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function NPC(id:uint, name:String)
+        public function NPC(name:String)
         {
-            super(id, name);
+            super();
             
+            m_name = name;
             m_walkTicks = 2000;
         }
         

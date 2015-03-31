@@ -23,7 +23,7 @@ package royalshield.entities
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function GameObject(id:uint, name:String)
+        public function GameObject(id:uint = 0, name:String = null)
         {
             m_id = id;
             m_name = name;
