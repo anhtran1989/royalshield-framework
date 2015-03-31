@@ -2,7 +2,7 @@ package royalshield.entities.creatures
 {
     import royalshield.core.royalshield_internal;
     import royalshield.errors.NullArgumentError;
-    import royalshield.utils.GameUtils;
+    import royalshield.utils.GameUtil;
     
     use namespace royalshield_internal;
     
@@ -41,7 +41,7 @@ package royalshield.entities.creatures
             m_name = type.name;
             m_health = type.health;
             m_healthMax = type.healthMax;
-            m_heathPercent = GameUtils.getPercentValue(m_health, m_healthMax);
+            m_heathPercent = GameUtil.getPercentValue(m_health, m_healthMax);
         }
     }
 }

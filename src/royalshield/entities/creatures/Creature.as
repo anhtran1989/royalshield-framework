@@ -11,7 +11,7 @@ package royalshield.entities.creatures
     import royalshield.graphics.IRenderable;
     import royalshield.graphics.IUpdatable;
     import royalshield.graphics.Outfit;
-    import royalshield.utils.GameUtils;
+    import royalshield.utils.GameUtil;
     import royalshield.utils.IDestroyable;
     import royalshield.utils.isNullOrEmpty;
     import royalshield.world.Tile;
@@ -121,7 +121,7 @@ package royalshield.entities.creatures
             m_name = "Creature";
             m_healthMax = 100;
             m_health = m_healthMax;
-            m_heathPercent = GameUtils.getPercentValue(m_health, m_healthMax);
+            m_heathPercent = GameUtil.getPercentValue(m_health, m_healthMax);
             m_baseSpeed = 200;
             m_variableSpeed = 0;
             m_walkDuration = 0;

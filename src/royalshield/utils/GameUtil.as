@@ -2,15 +2,15 @@ package royalshield.utils
 {
     import royalshield.errors.AbstractClassError;
 
-    public final class GameUtils
+    public final class GameUtil
     {
         //--------------------------------------------------------------------------
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function GameUtils()
+        public function GameUtil()
         {
-            throw new AbstractClassError(GameUtils);
+            throw new AbstractClassError(GameUtil);
         }
         
         //--------------------------------------------------------------------------

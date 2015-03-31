@@ -20,7 +20,7 @@
     <classEntry path="royalshield.entities.IGameObject"/>
     <classEntry path="royalshield.entities.creatures.Creature"/>
     <classEntry path="royalshield.entities.creatures.Monster"/>
-	<classEntry path="royalshield.entities.creatures.MonsterType"/>
+    <classEntry path="royalshield.entities.creatures.MonsterType"/>
     <classEntry path="royalshield.entities.creatures.NPC"/>
     <classEntry path="royalshield.entities.creatures.Player"/>
     <classEntry path="royalshield.entities.items.Ground"/>
@@ -46,7 +46,7 @@
     <classEntry path="royalshield.utils.ClassUtil"/>
     <classEntry path="royalshield.utils.CreatureChecker"/>
     <classEntry path="royalshield.utils.CreatureStatusRenderer"/>
-    <classEntry path="royalshield.utils.GameUtils"/>
+    <classEntry path="royalshield.utils.GameUtil"/>
     <classEntry path="royalshield.utils.IDestroyable"/>
     <classEntry path="royalshield.utils.isNullOrEmpty"/>
     <classEntry path="royalshield.utils.RenderHelper"/>
