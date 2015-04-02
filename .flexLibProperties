@@ -34,6 +34,7 @@
     <classEntry path="royalshield.geom.Rect"/>
     <classEntry path="royalshield.graphics.Effect"/>
     <classEntry path="royalshield.graphics.Graphic"/>
+    <classEntry path="royalshield.graphics.GraphicCategory"/>
     <classEntry path="royalshield.graphics.GraphicType"/>
     <classEntry path="royalshield.graphics.IGraphic"/>
     <classEntry path="royalshield.graphics.IRenderable"/>

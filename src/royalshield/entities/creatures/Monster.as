@@ -29,6 +29,15 @@ package royalshield.entities.creatures
         //--------------------------------------------------------------------------
         
         //--------------------------------------
+        // Override Public
+        //--------------------------------------
+        
+        override public function toString():String
+        {
+            return "[Monster name=" + this.name + ", id=" + this.id + "]";
+        }
+        
+        //--------------------------------------
         // Internal
         //--------------------------------------
         

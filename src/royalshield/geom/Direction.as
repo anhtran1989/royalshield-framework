@@ -28,7 +28,7 @@ package royalshield.geom
         public static const NORTHWEST:String = "NORTHWEST";
         public static const NORTHEAST:String = "NORTHEAST";
         
-        public static function toValue(direction:String):uint
+        public static function directionToValue(direction:String):uint
         {
             if (isNullOrEmpty(direction))
                 throw new NullOrEmptyArgumentError("value");
@@ -61,6 +61,38 @@ package royalshield.geom
             }
             
             throw new Error("Direction.toDirection: Unknown Direction '{0}'.", direction);
+        }
+        
+        public static function valueToDirection(value:uint):String
+        {
+            switch(value)
+            {
+                case 0:
+                    return NORTH;
+                    
+                case 1:
+                    return EAST;
+                    
+                case 2:
+                    return SOUTH;
+                    
+                case 3:
+                    return WEST;
+                    
+                case 4:
+                    return SOUTHWEST;
+                    
+                case 5:
+                    return SOUTHEAST;
+                    
+                case 6:
+                    return NORTHWEST;
+                    
+                case 7:
+                    return NORTHEAST;
+            }
+            
+            throw new Error("Direction.toDirection: Unknown Direction value '{0}'.", value);
         }
         
         public static function deltaToDirection(deltaX:int, deltaY:int):String

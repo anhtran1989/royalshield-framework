@@ -218,6 +218,14 @@ package royalshield.entities.creatures
             return true;
         }
         
+        public function getTimeSinceLastMove():int
+        {
+            if (m_lastStepTime != 0)
+                return (m_elapsedTime - m_lastStepTime);
+            
+            return int.MAX_VALUE;
+        }
+        
         public function stopWalk():void
         {
             m_walkOffsetX = 0;
@@ -310,7 +318,7 @@ package royalshield.entities.creatures
         public function render(canvas:GameCanvas, pointX:int, pointY:int, patternX:int = 0, patternY:int = 0, patternZ:int = 0):void
         {
             if (m_outfit)
-                m_outfit.render(canvas, pointX + m_outfit.offsetX, pointY + m_outfit.offsetY, Direction.toValue(direction), 0, 0);
+                m_outfit.render(canvas, pointX + m_outfit.offsetX, pointY + m_outfit.offsetY, Direction.directionToValue(direction), 0, 0);
         }
         
         public function destroy():void
@@ -354,7 +362,8 @@ package royalshield.entities.creatures
         
         royalshield_internal function onCreatureMove(creature:Creature, newTile:Tile, oldTile:Tile, teleport:Boolean):void
         {
-            //
+            if (creature == this)
+                m_lastStepTime = m_elapsedTime;
         }
         
         royalshield_internal function setUniqueId(id:uint):void
