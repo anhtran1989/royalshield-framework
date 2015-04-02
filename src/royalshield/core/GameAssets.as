@@ -3,6 +3,7 @@ package royalshield.core
     import flash.display.BitmapData;
     import flash.geom.Point;
     
+    import royalshield.errors.SingletonClassError;
     import royalshield.geom.Rect;
     import royalshield.graphics.GraphicType;
     import royalshield.textures.SpriteSheet;
@@ -15,7 +16,10 @@ package royalshield.core
         
         public function GameAssets()
         {
+            if (s_instance)
+                throw new SingletonClassError(GameAssets);
             
+            s_instance = this;
         }
         
         //--------------------------------------------------------------------------
@@ -74,6 +78,26 @@ package royalshield.core
             spriteSheet.copyPixels(texture, texture.rect, new Point());
             
             return spriteSheet;
+        }
+        
+        public function getObjectTexturePreview(id:uint, category:String):BitmapData
+        {
+            return TEMP_BITMAP;
+        }
+        
+        //--------------------------------------------------------------------------
+        // STATIC
+        //--------------------------------------------------------------------------
+        
+        private static const TEMP_BITMAP:BitmapData = new BitmapData(32, 32, false, 0xff00ff);
+        
+        private static var s_instance:GameAssets;
+        public static function getInstance():GameAssets
+        {
+            if (!s_instance)
+                new GameAssets();
+            
+            return s_instance;
         }
     }
 }
