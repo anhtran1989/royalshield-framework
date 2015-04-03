@@ -101,6 +101,16 @@ package royalshield.core
                 creature.startAutoWalk(directions);
         }
         
+        public function getCreatureById(id:uint):Creature
+        {
+            return m_world.getCreatureById(id);
+        }
+        
+        public function getCreatureByName(name:String):Creature
+        {
+            return m_world.getCreatureByName(name);
+        }
+        
         //--------------------------------------
         // Private
         //--------------------------------------
@@ -124,6 +134,9 @@ package royalshield.core
         private static var s_instance:RoyalShield;
         public static function getInstance():RoyalShield
         {
+            if (!s_instance)
+                new RoyalShield();
+            
             return s_instance;
         }
     }

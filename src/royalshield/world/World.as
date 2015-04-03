@@ -4,9 +4,7 @@ package royalshield.world
     
     import royalshield.core.GameConsts;
     import royalshield.core.royalshield_internal;
-    import royalshield.entities.GameObject;
     import royalshield.entities.creatures.Creature;
-    import royalshield.entities.creatures.Player;
     import royalshield.entities.items.Item;
     import royalshield.errors.NullArgumentError;
     import royalshield.geom.Direction;
@@ -14,18 +12,16 @@ package royalshield.world
     import royalshield.graphics.IUpdatable;
     import royalshield.signals.Signal;
     import royalshield.utils.CreatureChecker;
-    import royalshield.utils.IDestroyable;
     import royalshield.utils.ThingUpdater;
     
     use namespace royalshield_internal;
     
-    public class World implements IDestroyable, IUpdatable
+    public class World implements IUpdatable
     {
         //--------------------------------------------------------------------------
         // PROPERTIES
         //--------------------------------------------------------------------------
         
-        private var m_player:Player;
         private var m_map:WorldMap;
         private var m_creatures:Dictionary;
         private var m_creatureCount:uint;
@@ -118,6 +114,7 @@ package royalshield.world
             if (item.isAnimated)
                 m_thingUpdater.addGameObject(item);
             
+            updateTileFlags(item, tile);
             return true;
         }
         
@@ -138,6 +135,7 @@ package royalshield.world
             if (item.isAnimated)
                 m_thingUpdater.removeGameObject(item);
             
+            updateTileFlags(item, tile, true);
             return true;
         }
         
@@ -334,17 +332,67 @@ package royalshield.world
             return null;
         }
         
-        public function destroy():void
+        public function getCreatureByName(name:String):Creature
         {
+            return null;
+        }
+        
+        public function clear():void
+        {
+            for each(var creature:Creature in m_creatures)
+                removeCreature(creature.id);
+            
             m_creatures = new Dictionary();
             m_creatureCount = 0;
             m_thingUpdater.clear();
             m_creatureChecker.clear();
             m_effectList = new Vector.<Effect>();
             m_effectCount = 0;
-            m_creatureAddedSignal.removeAll();
-            m_creatureRemovedSignal.removeAll();
-            m_creatureMovedSignal.removeAll();
+            m_map.clear();
+        }
+        
+        //--------------------------------------
+        // Protected
+        //--------------------------------------
+        
+        protected function updateTileFlags(item:Item, tile:Tile, removing:Boolean = false):void
+        {
+            var hasSolidMap:Boolean = (item.solidMap != null);
+            var length:uint = hasSolidMap ? item.solidMap.length : 0;
+            var columns:uint = item.solidMapColumns;
+            var rows:uint = uint(length / columns);
+            var pz:int = tile.z;
+            var index:int = 0;
+            
+            if (length == 1) {
+                if (removing) {
+                    if (item.solidMap[index] != 0)
+                        tile.resetFlag(TileFlags.SOLID);
+                } else {
+                    if (item.solidMap[index] != 0)
+                        tile.setFlag(TileFlags.SOLID);
+                }
+            } else if (length > 1) {
+                for (var y:int = rows - 1; y >= 0; y--) {
+                    for (var x:int = columns - 1; x >= 0; x--) {
+                        var px:int = tile.x - x;
+                        var py:int = tile.y - y;
+                        if (px > 0 && py > 0) {
+                            var tmpTile:Tile = m_map.getTile(px, py, pz);
+                            if (tmpTile) {
+                                if (removing) {
+                                    if (item.solidMap[index] != 0)
+                                        tmpTile.resetFlag(TileFlags.SOLID);
+                                } else {
+                                    if (item.solidMap[index] != 0)
+                                        tmpTile.setFlag(TileFlags.SOLID);
+                                }
+                            }
+                        }
+                        index++;
+                    }
+                }
+            }
         }
         
         //--------------------------------------------------------------------------

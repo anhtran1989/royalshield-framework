@@ -21,5 +21,16 @@ package royalshield.utils
         {
             return max < 0 ? 0 : uint(Math.ceil(value * 100 / max));
         }
+        
+        public static function hash(str:String):uint
+        {
+            var fnvPrime:uint=  0x811C9DC5;
+            var hash:uint = 0;
+            for (var i:int = 0; i < str.length; i++) {
+                hash *=fnvPrime;
+                hash ^= uint(str.charCodeAt(i));
+            }
+            return hash;
+        }
     }
 }

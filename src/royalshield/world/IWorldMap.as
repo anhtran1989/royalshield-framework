@@ -3,9 +3,8 @@ package royalshield.world
     import royalshield.entities.creatures.Creature;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
-    import royalshield.utils.IDestroyable;
     
-    public interface IWorldMap extends IDestroyable
+    public interface IWorldMap
     {
         function get width():uint;
         function get height():uint;

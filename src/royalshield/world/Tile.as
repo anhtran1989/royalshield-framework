@@ -101,7 +101,6 @@ package royalshield.world
                 m_itemCount++;
             }
             
-            updateTileFlags(item, false);
             return true;
         }
         
@@ -124,7 +123,6 @@ package royalshield.world
                     m_items = null;
             }
             
-            updateTileFlags(item, true);
             return true;
         }
         
@@ -222,34 +220,23 @@ package royalshield.world
             return true;
         }
         
-        public function hasFlag(flag:uint):Boolean
-        {
-            return ((m_flags & flag) == flag);
-        }
-        
         //--------------------------------------
-        // Private
+        // Internal
         //--------------------------------------
         
-        private function setFlag(flag:uint):void
+        royalshield_internal function setFlag(flag:uint):void
         {
             m_flags = (m_flags | flag);
         }
         
-        private function resetFlag(flag:uint):void
+        royalshield_internal function hasFlag(flag:uint):Boolean
         {
-            m_flags = (m_flags & ~flag);
+            return ((m_flags & flag) == flag);
         }
         
-        private function updateTileFlags(item:Item, removing:Boolean):void
+        royalshield_internal function resetFlag(flag:uint):void
         {
-            if (removing) {
-                if (item.isSolid)
-                    resetFlag(TileFlags.SOLID);
-            } else {
-                if (item.isSolid)
-                    setFlag(TileFlags.SOLID);  
-            }
+            m_flags = (m_flags & ~flag);
         }
         
         //--------------------------------------------------------------------------

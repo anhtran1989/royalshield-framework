@@ -13,7 +13,8 @@ package royalshield.entities.items
         // PROPERTIES
         //--------------------------------------------------------------------------
         
-        public var isSolid:Boolean;
+        public var solidMap:Vector.<uint>;
+        public var solidMapColumns:uint;
         
         protected var m_graphic:Graphic;
         protected var m_isAnimated:Boolean;
@@ -49,6 +50,11 @@ package royalshield.entities.items
         //--------------------------------------
         // Public
         //--------------------------------------
+        
+        public function toString():String
+        {
+            return "[Item name=" + this.name + ", id=" + this.id + "]";
+        }
         
         public function update(elapsedTime:Number):Boolean
         {

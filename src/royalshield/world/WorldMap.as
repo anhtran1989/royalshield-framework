@@ -352,7 +352,7 @@ package royalshield.world
             }
         }
         
-        public function destroy():void
+        public function clear():void
         {
             if (m_tileCount == 0)
                 return;
