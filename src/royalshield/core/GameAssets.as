@@ -89,10 +89,10 @@ package royalshield.core
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static const TEMP_BITMAP:BitmapData = new BitmapData(32, 32, false, 0xff00ff);
+        static private const TEMP_BITMAP:BitmapData = new BitmapData(32, 32, false, 0xff00ff);
         
-        private static var s_instance:GameAssets;
-        public static function getInstance():GameAssets
+        static private var s_instance:GameAssets;
+        static public function getInstance():GameAssets
         {
             if (!s_instance)
                 new GameAssets();

@@ -167,6 +167,6 @@ package royalshield.world.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const NUM_NODES:uint = 200;
+        static public const NUM_NODES:uint = 200;
     }
 }

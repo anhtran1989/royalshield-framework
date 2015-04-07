@@ -125,7 +125,7 @@ package royalshield.animators
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const FORWARD:uint = 0;
-        public static const BACKWARD:uint = 1;
+        static public const FORWARD:uint = 0;
+        static public const BACKWARD:uint = 1;
     }
 }

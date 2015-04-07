@@ -131,8 +131,8 @@ package royalshield.core
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static var s_instance:RoyalShield;
-        public static function getInstance():RoyalShield
+        static private var s_instance:RoyalShield;
+        static public function getInstance():RoyalShield
         {
             if (!s_instance)
                 new RoyalShield();

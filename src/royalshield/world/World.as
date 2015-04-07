@@ -399,6 +399,6 @@ package royalshield.world
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static const CREATURE_VECTOR:Vector.<Creature> = new Vector.<Creature>();
+        static private const CREATURE_VECTOR:Vector.<Creature> = new Vector.<Creature>();
     }
 }

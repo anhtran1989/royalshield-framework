@@ -17,11 +17,11 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const COPY:String = "copy";
-        public static const MIRROR:String = "mirror";
-        public static const FLIP:String = "flip"
-        public static const ROTATE_90:String = "rotate90";
-        public static const ROTATE_180:String = "rotate180";
-        public static const ROTATE_270:String = "rotate270";
+        static public const COPY:String = "copy";
+        static public const MIRROR:String = "mirror";
+        static public const FLIP:String = "flip"
+        static public const ROTATE_90:String = "rotate90";
+        static public const ROTATE_180:String = "rotate180";
+        static public const ROTATE_270:String = "rotate270";
     }
 }

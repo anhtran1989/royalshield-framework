@@ -243,7 +243,7 @@ package royalshield.world
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const MAX_ITEMS:uint = 10;
-        public static const MAX_CREATURES:uint = 10;
+        static public const MAX_ITEMS:uint = 10;
+        static public const MAX_CREATURES:uint = 10;
     }
 }

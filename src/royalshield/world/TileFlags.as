@@ -17,6 +17,6 @@ package royalshield.world
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const SOLID:uint = 1 << 0;
+        static public const SOLID:uint = 1 << 0;
     }
 }

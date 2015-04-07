@@ -17,9 +17,9 @@ package royalshield.graphics
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const ITEM:String = "item";
-        public static const OUTFIT:String = "outfit";
-        public static const MAGIC_EFFECT:String = "magicEffect";
-        public static const MISSILE:String = "missile";
+        static public const ITEM:String = "item";
+        static public const OUTFIT:String = "outfit";
+        static public const MAGIC_EFFECT:String = "magicEffect";
+        static public const MISSILE:String = "missile";
     }
 }

@@ -51,14 +51,14 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static const INSTANCES:uint = 4;
+        static private const INSTANCES:uint = 4;
         
-        public static const UNDEFINED:CombatFormulaType = new CombatFormulaType("UNDEFINED", 0);
-        public static const MAGIC_LEVEL:CombatFormulaType = new CombatFormulaType("MAGIC_LEVEL", 1);
-        public static const SKILL:CombatFormulaType = new CombatFormulaType("SKILL", 2);
-        public static const VALUE:CombatFormulaType = new CombatFormulaType("VALUE", 3);
+        static public const UNDEFINED:CombatFormulaType = new CombatFormulaType("UNDEFINED", 0);
+        static public const MAGIC_LEVEL:CombatFormulaType = new CombatFormulaType("MAGIC_LEVEL", 1);
+        static public const SKILL:CombatFormulaType = new CombatFormulaType("SKILL", 2);
+        static public const VALUE:CombatFormulaType = new CombatFormulaType("VALUE", 3);
         
-        public static function toCombatFormulaType(value:Object):CombatFormulaType
+        static public function toCombatFormulaType(value:Object):CombatFormulaType
         {
             if (value is int || value is uint || value is Number)
             {

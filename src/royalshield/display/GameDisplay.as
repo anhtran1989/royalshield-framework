@@ -358,8 +358,8 @@ package royalshield.display
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const MAX_CREATURES:uint = 10;
-        public static const MAX_MISSILES:uint = 100;
-        public static const POINT:Point = new Point();
+        static public const MAX_CREATURES:uint = 10;
+        static public const MAX_MISSILES:uint = 100;
+        static public const POINT:Point = new Point();
     }
 }

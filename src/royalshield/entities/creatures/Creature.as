@@ -444,11 +444,11 @@ package royalshield.entities.creatures
         // STATIC
         //--------------------------------------------------------------------------
         
-        protected static const SPEED_A:Number = 857.36;
-        protected static const SPEED_B:Number = 261.29;
-        protected static const SPEED_C:Number = -4795.01;
+        static protected const SPEED_A:Number = 857.36;
+        static protected const SPEED_B:Number = 261.29;
+        static protected const SPEED_C:Number = -4795.01;
         
-        protected static function canSee(x1:int, y1:int, x2:int, y2:int, deltaX:int, deltaY:int):Boolean
+        static protected function canSee(x1:int, y1:int, x2:int, y2:int, deltaX:int, deltaY:int):Boolean
         {
             return (Math.abs(x1 - x2) < deltaX && Math.abs(y1 - y2) < deltaY);
         }

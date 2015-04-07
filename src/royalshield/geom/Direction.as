@@ -19,16 +19,16 @@ package royalshield.geom
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const NORTH:String = "NORTH";
-        public static const EAST:String = "EAST";
-        public static const SOUTH:String = "SOUTH";
-        public static const WEST:String = "WEST";
-        public static const SOUTHWEST:String = "SOUTHWEST";
-        public static const SOUTHEAST:String = "SOUTHEAST";
-        public static const NORTHWEST:String = "NORTHWEST";
-        public static const NORTHEAST:String = "NORTHEAST";
+        static public const NORTH:String = "NORTH";
+        static public const EAST:String = "EAST";
+        static public const SOUTH:String = "SOUTH";
+        static public const WEST:String = "WEST";
+        static public const SOUTHWEST:String = "SOUTHWEST";
+        static public const SOUTHEAST:String = "SOUTHEAST";
+        static public const NORTHWEST:String = "NORTHWEST";
+        static public const NORTHEAST:String = "NORTHEAST";
         
-        public static function directionToValue(direction:String):uint
+        static public function directionToValue(direction:String):uint
         {
             if (isNullOrEmpty(direction))
                 throw new NullOrEmptyArgumentError("value");
@@ -63,7 +63,7 @@ package royalshield.geom
             throw new Error("Direction.toDirection: Unknown Direction '{0}'.", direction);
         }
         
-        public static function valueToDirection(value:uint):String
+        static public function valueToDirection(value:uint):String
         {
             switch(value)
             {
@@ -95,7 +95,7 @@ package royalshield.geom
             throw new Error("Direction.toDirection: Unknown Direction value '{0}'.", value);
         }
         
-        public static function deltaToDirection(deltaX:int, deltaY:int):String
+        static public function deltaToDirection(deltaX:int, deltaY:int):String
         {
             const radiusA:int = 106;
             const radiusB:int = 256;

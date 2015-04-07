@@ -19,7 +19,7 @@ package royalshield.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static function getClassName(type:Class):String
+        static public function getClassName(type:Class):String
         {
             var name:String = getQualifiedClassName(type);
             var index:int = name.indexOf("::");

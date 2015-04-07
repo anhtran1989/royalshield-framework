@@ -138,8 +138,8 @@ package royalshield.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static const VECTOR_COUNT:uint = 2;
-        private static const CHECK_INTERVAL:uint = 1000;
-        private static const THINK_INTERVAL:uint = CHECK_INTERVAL / VECTOR_COUNT;
+        static private const VECTOR_COUNT:uint = 2;
+        static private const CHECK_INTERVAL:uint = 1000;
+        static private const THINK_INTERVAL:uint = CHECK_INTERVAL / VECTOR_COUNT;
     }
 }

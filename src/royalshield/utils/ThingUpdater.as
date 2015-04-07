@@ -193,6 +193,6 @@ package royalshield.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const UPDATE_INTERVAL:uint = 40;
+        static public const UPDATE_INTERVAL:uint = 40;
     }
 }

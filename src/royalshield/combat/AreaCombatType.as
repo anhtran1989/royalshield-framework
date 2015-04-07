@@ -17,32 +17,32 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const WAVE_4:Array = [1, 1, 1, 1, 1,
+        static public const WAVE_4:Array = [1, 1, 1, 1, 1,
                                             0, 1, 1, 1, 0,
                                             0, 1, 1, 1, 0,
                                             0, 0, 3, 0, 0];
         
-        public static const SQUARE_WAVE_5:Array = [1, 1, 1,
+        static public const SQUARE_WAVE_5:Array = [1, 1, 1,
                                                    1, 1, 1,
                                                    1, 1, 1,
                                                    0, 1, 0,
                                                    0, 3, 0];
         
-        public static const BEAM_1:Array = [3];
+        static public const BEAM_1:Array = [3];
         
-        public static const BEAM_5:Array = [1,
+        static public const BEAM_5:Array = [1,
                                             1,
                                             1,
                                             1,
                                             3];
         
-        public static const CIRCLE_2X2:Array = [0, 1, 1, 1, 0,
+        static public const CIRCLE_2X2:Array = [0, 1, 1, 1, 0,
                                                 1, 1, 1, 1, 1,
                                                 1, 1, 3, 1, 1,
                                                 1, 1, 1, 1, 1,
                                                 0, 1, 1, 1, 0];
         
-        public static const CROSS_5X5:Array = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+        static public const CROSS_5X5:Array = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
                                                0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
                                                0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0,
                                                0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0,
@@ -54,7 +54,7 @@ package royalshield.combat
                                                0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
                                                0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0];
         
-        public static const DEFAULT_AREA:Array = [[0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0],
+        static public const DEFAULT_AREA:Array = [[0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0],
                                                   [0, 0, 0, 0, 8, 8, 7, 8, 8, 0, 0, 0, 0],
                                                   [0, 0, 0, 8, 7, 6, 6, 6, 7, 8, 0, 0, 0],
                                                   [0, 0, 8, 7, 6, 5, 5, 5, 6, 7, 8, 0, 0],

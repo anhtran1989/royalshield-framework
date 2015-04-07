@@ -407,12 +407,12 @@ package royalshield.world
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static const NORMAL_WALK_COST:uint = 10;
-        public static const DIAGONAL_WALK_COST:uint = 25;
-        public static const MAX_VIEWPORT_X:uint = 11;
-        public static const MAX_VIEWPORT_Y:uint = 11;
+        static public const NORMAL_WALK_COST:uint = 10;
+        static public const DIAGONAL_WALK_COST:uint = 25;
+        static public const MAX_VIEWPORT_X:uint = 11;
+        static public const MAX_VIEWPORT_Y:uint = 11;
         
-        private static const RELATIONAL_POINTS:Vector.<Point> = new <Point>[new Point(-1,  0),
+        static private const RELATIONAL_POINTS:Vector.<Point> = new <Point>[new Point(-1,  0),
                                                                             new Point( 0,  1),
                                                                             new Point( 1,  0),
                                                                             new Point( 0, -1),

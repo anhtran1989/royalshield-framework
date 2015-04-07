@@ -214,7 +214,7 @@ package royalshield.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        private static const MATRIX_HELPER:Matrix = new Matrix();
+        static private const MATRIX_HELPER:Matrix = new Matrix();
     }
 }
 
