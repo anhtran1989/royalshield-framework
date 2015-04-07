@@ -1,16 +1,15 @@
 package royalshield.signals
 {
-    import royalshield.errors.NullArgumentError;
+    import flash.utils.Dictionary;
     
     public class Signal
     {
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         // PROPERTIES
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         
-        private var m_callbacks:Vector.<Function>;
+        private var m_callbacks:Dictionary;
         private var m_length:uint;
-        private var m_index:int;
         
         //--------------------------------------
         // Getters / Setters
@@ -18,69 +17,95 @@ package royalshield.signals
         
         public function get length():uint { return m_length; }
         
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         // CONSTRUCTOR
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         
         public function Signal()
         {
-            
+            m_callbacks = new Dictionary(true);
         }
         
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         // METHODS
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         
-        //--------------------------------------
+        // --------------------------------------
         // Public
-        //--------------------------------------
+        // --------------------------------------
         
         public function add(callback:Function):Boolean
         {
-            if (callback == null)
-                throw new NullArgumentError("callback");
-            
-            if (!m_callbacks)
-                m_callbacks = new Vector.<Function>();
-            
-            if (m_callbacks.indexOf(callback) != -1)
-                return false;
-            
-            m_callbacks[m_length++] = callback;
-            return true;
+            if (!has(callback)) {
+                m_callbacks[callback] = new Slot(callback);
+                m_length++;
+                return true;
+            }
+            return false;
+        }
+        
+        public function addOnce(callback:Function):Boolean
+        {
+            if (!has(callback)) {
+                m_callbacks[callback] = new Slot(callback, true);
+                m_length++;
+                return true;
+            }
+            return false;
         }
         
         public function has(callback:Function):Boolean
         {
-            if (m_callbacks && callback != null)
-                return (m_callbacks.indexOf(callback) != -1)
-                
-            return false;
+            return (callback != null && m_callbacks[callback] !== undefined);
         }
         
         public function remove(callback:Function):Boolean
         {
-            if (m_callbacks && callback != null) {
-                m_index = m_callbacks.indexOf(callback);
-                if (m_index > -1) {
-                    m_callbacks.splice(m_index, 1);
-                    m_length = m_callbacks.length;
-                    return true;
-                }
+            if (has(callback)) {
+                delete m_callbacks[callback];
+                m_length = Math.max(0, m_length - 1);
             }
             return false;
         }
         
         public function removeAll():Boolean
         {
-            m_callbacks = null;
+            m_callbacks = new Dictionary();
+            m_length = 0;
             return true;
         }
         
         public function dispatch(...args):void
         {
-            for (m_index = 0; m_index < m_length; m_index++)
-                m_callbacks[m_index].apply(null, args);
+            for each (var slot:Slot in m_callbacks) {
+                slot.callback.apply(null, args);
+                if (slot.once)
+                    delete m_callbacks[slot.callback];
+            }
         }
+    }
+}
+
+// ******************************************************************************
+// HELPER CLASS
+// ******************************************************************************
+
+class Slot
+{
+    // --------------------------------------------------------------------------
+    // PROPERTIES
+    // --------------------------------------------------------------------------
+    
+    public var callback:Function;
+    public var once:Boolean;
+    
+    // --------------------------------------------------------------------------
+    // CONSTRUCTOR
+    // --------------------------------------------------------------------------
+    
+    public function Slot(callback:Function, once:Boolean = false)
+    {
+        this.callback = callback;
+        this.once = once;
     }
 }
