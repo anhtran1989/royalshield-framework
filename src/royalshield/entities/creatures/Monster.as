@@ -51,6 +51,7 @@ package royalshield.entities.creatures
             m_health = type.health;
             m_healthMax = type.healthMax;
             m_heathPercent = GameUtil.getPercentValue(m_health, m_healthMax);
+            m_baseSpeed = type.speed;
         }
     }
 }

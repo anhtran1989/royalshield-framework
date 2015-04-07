@@ -10,6 +10,7 @@ package royalshield.entities.creatures
         public var health:uint;
         public var healthMax:uint;
         public var experience:uint;
+        public var speed:uint;
         
         public var isAttackable:Boolean;
         public var isHostile:Boolean;
@@ -24,6 +25,7 @@ package royalshield.entities.creatures
             this.health = 100;
             this.healthMax = 100;
             this.experience = 0;
+            this.speed = 110;
             this.isAttackable = true;
             this.isHostile = true;
         }

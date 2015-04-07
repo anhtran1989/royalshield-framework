@@ -373,6 +373,11 @@ package royalshield.world
             m_effectList = new Vector.<Effect>();
             m_effectCount = 0;
             m_map.clear();
+            
+            m_creatureAddedSignal.removeAll();
+            m_creatureRemovedSignal.removeAll();
+            m_creatureMovedSignal.removeAll();
+            m_creatureTurnedSignal.removeAll();
         }
         
         //--------------------------------------

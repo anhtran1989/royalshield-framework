@@ -6,11 +6,9 @@ package royalshield.core
     import royalshield.entities.creatures.Creature;
     import royalshield.entities.creatures.Player;
     import royalshield.errors.NullArgumentError;
-    import royalshield.errors.NullOrEmptyArgumentError;
     import royalshield.errors.SingletonClassError;
     import royalshield.geom.Direction;
     import royalshield.geom.Position;
-    import royalshield.utils.isNullOrEmpty;
     import royalshield.world.World;
     import royalshield.world.utils.AStarNodes;
     
@@ -48,8 +46,6 @@ package royalshield.core
             m_assets = new GameAssets();
             m_player = new Player();
             m_world = new World();
-            m_world.onCreatureAdded.add(onCreatureAddedCallback);
-            m_world.onCreatureMoved.add(onCreatureMoveCallback);
             m_display = new GameDisplay();
             m_display.player = m_player;
             m_display.map = m_world.map;
@@ -110,22 +106,6 @@ package royalshield.core
         public function getCreatureByName(name:String):Creature
         {
             return m_world.getCreatureByName(name);
-        }
-        
-        //--------------------------------------
-        // Private
-        //--------------------------------------
-        
-        private function onCreatureAddedCallback(creature:Creature):void
-        {
-            if (creature == m_player)
-                m_world.map.setPosition(m_player.tile.x, m_player.tile.y, m_player.tile.z);
-        }
-        
-        private function onCreatureMoveCallback(creature:Creature):void
-        {
-            if (creature == m_player)
-                m_world.map.setPosition(m_player.tile.x, m_player.tile.y, m_player.tile.z);
         }
         
         //--------------------------------------------------------------------------

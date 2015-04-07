@@ -29,10 +29,11 @@ package royalshield.world
         private var m_tileCount:uint;
         private var m_maxTileCount:uint;
         private var m_position:Position;
-        private var m_positionChangedSignal:Signal;
-        private var m_dirtySignal:Signal;
         private var m_nodes:AStarNodes;
         private var m_fpcc:FrozenPathingConditionCall;
+        
+        private var m_positionChangedSignal:Signal;
+        private var m_dirtySignal:Signal;
         
         //--------------------------------------
         // Getters / Setters 
@@ -46,6 +47,7 @@ package royalshield.world
         public function get x():uint { return m_position.x; }
         public function get y():uint { return m_position.y; }
         public function get z():uint { return m_position.z; }
+        
         public function get onPositionChanged():Signal { return m_positionChangedSignal; }
         public function get onMapDirty():Signal { return m_dirtySignal; }
         
@@ -62,10 +64,11 @@ package royalshield.world
             m_tileCount = 0;
             m_maxTileCount = m_width * m_height * m_layers;
             m_position = new Position();
-            m_positionChangedSignal = new Signal();
-            m_dirtySignal = new Signal();
             m_nodes = new AStarNodes();
             m_fpcc = new FrozenPathingConditionCall();
+            
+            m_positionChangedSignal = new Signal();
+            m_dirtySignal = new Signal();
         }
         
         //--------------------------------------------------------------------------
@@ -448,11 +451,13 @@ package royalshield.world
         
         public function clear():void
         {
-            if (m_tileCount == 0)
-                return;
+            if (m_tileCount != 0) {
+                m_tiles = new Dictionary();
+                m_tileCount = 0;
+            }
             
-            m_tiles = new Dictionary();
-            m_tileCount = 0;
+            m_positionChangedSignal.removeAll();
+            m_dirtySignal.removeAll();
         }
         
         //--------------------------------------
