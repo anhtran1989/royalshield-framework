@@ -1,7 +1,12 @@
 package royalshield.utils
 {
+    import flash.geom.Point;
+    import flash.geom.Rectangle;
+    
+    import royalshield.entities.creatures.Creature;
     import royalshield.errors.AbstractClassError;
-
+    import royalshield.geom.Position;
+    
     public final class GameUtil
     {
         //--------------------------------------------------------------------------
@@ -17,12 +22,18 @@ package royalshield.utils
         // STATIC
         //--------------------------------------------------------------------------
         
-        public static function getPercentValue(value:int, max:int):uint
+        static public const ZERO_POINT:Point = new Point();
+        static public const RECTANGLE:Rectangle = new Rectangle();
+        static public const POSITION:Position = new Position();
+        static public const MAX_MIN_VALUES:MinMaxValues = new MinMaxValues();
+        static public const CREATURE_VECTOR:Vector.<Creature> = new Vector.<Creature>();
+        
+        static public function getPercentValue(value:int, max:int):uint
         {
             return max < 0 ? 0 : uint(Math.ceil(value * 100 / max));
         }
         
-        public static function hash(str:String):uint
+        static public function hash(str:String):uint
         {
             var fnvPrime:uint=  0x811C9DC5;
             var hash:uint = 0;
