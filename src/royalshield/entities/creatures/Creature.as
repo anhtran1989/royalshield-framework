@@ -408,6 +408,16 @@ package royalshield.entities.creatures
                 m_lastStepTime = m_elapsedTime;
         }
         
+        royalshield_internal function onCreatureAppear(creature:Creature):void
+        {
+            ////
+        }
+        
+        royalshield_internal function onCreatureDisappear(creature:Creature):void
+        {
+            ////
+        }
+        
         royalshield_internal function setUniqueId(id:uint):void
         {
             m_id = id;

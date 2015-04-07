@@ -156,6 +156,13 @@ package royalshield.world
             creature.setUniqueId(uint(Math.random() * 0xFFFFFF) + 1);
             m_creatures[creature.id] = creature;
             m_creatureCount++;
+            
+            var spectators:Vector.<Creature> = GameUtil.CREATURE_VECTOR;
+            spectators.length = 0;
+            m_map.getSpectators(x, y, z, spectators);
+            for (var i:uint = 0; i < spectators.length; i++)
+                spectators[i].onCreatureAppear(creature);
+            
             m_thingUpdater.addGameObject(creature);
             m_creatureChecker.addCreature(creature);
             m_creatureAddedSignal.dispatch(creature);
@@ -165,12 +172,26 @@ package royalshield.world
         public function removeCreature(creatureId:uint):Boolean
         {
             var creature:Creature = getCreatureById(creatureId);
-            if (!creature || creature.isWorldRemoved || (creature.tile && !creature.tile.removeCreature(creature)))
+            if (!creature || creature.isWorldRemoved)
+                return false;
+            
+            var x:uint = creature.tile.x;
+            var y:uint = creature.tile.x;
+            var z:uint = creature.tile.x;
+            
+            if (!creature.tile.removeCreature(creature))
                 return false;
             
             creature.worldRemoved = true;
             delete m_creatures[creature.id];
             m_creatureCount = Math.max(0, m_creatureCount - 1);
+            
+            var spectators:Vector.<Creature> = GameUtil.CREATURE_VECTOR;
+            spectators.length = 0;
+            m_map.getSpectators(x, y, z, spectators);
+            for (var i:uint = 0; i < spectators.length; i++)
+                spectators[i].onCreatureDisappear(creature);
+            
             m_thingUpdater.removeGameObject(creature);
             m_creatureChecker.removeCreature(creature);
             m_creatureRemovedSignal.dispatch(creature);
