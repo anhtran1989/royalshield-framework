@@ -1,11 +1,10 @@
 package royalshield.graphics
 {
-    import flash.utils.getTimer;
-    
     import royalshield.core.GameConsts;
+    import royalshield.core.RoyalShield;
     import royalshield.geom.Direction;
     import royalshield.geom.Rect;
-
+    
     public class Missile extends Effect
     {
         //--------------------------------------------------------------------------
@@ -110,7 +109,7 @@ package royalshield.graphics
             }
             
             m_duration = int(Math.sqrt(Math.sqrt((m_deltaX * m_deltaX) + (m_deltaY * m_deltaY))) * 150);
-            m_timeEnd = getTimer() + m_duration; // TODO missing get the game elapsed time.
+            m_timeEnd = RoyalShield.getElapsedTime() + m_duration;
             m_deltaX *= -GameConsts.VIEWPORT_TILE_SIZE;
             m_deltaY *= -GameConsts.VIEWPORT_TILE_SIZE;
             m_speedX = m_deltaX;

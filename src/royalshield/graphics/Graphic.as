@@ -44,7 +44,6 @@ package royalshield.graphics
         
         public function Graphic(type:GraphicType)
         {
-            super(null, type.id);
             setGraphicType(type);
         }
         
@@ -101,6 +100,7 @@ package royalshield.graphics
                 throw new NullArgumentError("type");
             
             m_type = type;
+            m_id = type.id;
             m_frames = type.frames;
             m_spriteSheet = type.spriteSheet;
             m_animator = type.animator ? type.animator.clone() : null;

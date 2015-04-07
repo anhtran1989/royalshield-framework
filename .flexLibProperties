@@ -59,6 +59,7 @@
     <classEntry path="royalshield.world.WorldMap"/>
     <classEntry path="royalshield.world.utils.AStarNode"/>
     <classEntry path="royalshield.world.utils.AStarNodes"/>
+    <classEntry path="royalshield.graphics.TextualEffect"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

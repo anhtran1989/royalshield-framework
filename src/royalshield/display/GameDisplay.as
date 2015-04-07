@@ -14,6 +14,7 @@ package royalshield.display
     import royalshield.geom.Position;
     import royalshield.graphics.Effect;
     import royalshield.graphics.Missile;
+    import royalshield.graphics.TextualEffect;
     import royalshield.utils.CreatureStatusRenderer;
     import royalshield.utils.GameUtil;
     import royalshield.utils.RenderHelper;
@@ -42,6 +43,8 @@ package royalshield.display
         private var m_drawnCreaturesCount:uint;
         private var m_missiles:Vector.<RenderHelper>;
         private var m_missileCount:uint;
+        private var m_textualEffects:Vector.<RenderHelper>;
+        private var m_textualEffectCount:uint;
         private var m_statusRenderer:CreatureStatusRenderer;
         private var m_showGrid:Boolean;
         
@@ -107,6 +110,10 @@ package royalshield.display
             for (i = 0; i < MAX_MISSILES; i++)
                 m_missiles[i] = new RenderHelper();
             
+            m_textualEffects = new Vector.<RenderHelper>(MAX_EFFECTS, true);
+            for (i = 0; i < MAX_EFFECTS; i++)
+                m_textualEffects[i] = new RenderHelper();
+            
             this.addEventListener(MouseEvent.CLICK, mouseClickHandler);
         }
         
@@ -136,6 +143,7 @@ package royalshield.display
             
             m_drawnCreaturesCount = 0;
             m_missileCount = 0;
+            m_textualEffectCount = 0;
             
             if (m_player && m_map) {
                 findCreatures(m_map.z);
@@ -153,6 +161,7 @@ package royalshield.display
             this.graphics.endFill();
             
             drawCreatureStatus();
+            drawTextualEffects();
             
             if (m_showGrid)
                 drawGrid(width, height);
@@ -293,11 +302,27 @@ package royalshield.display
             // ==================================================================
             // Draw effects
             
+            var halfTileSize:int = GameConsts.VIEWPORT_TILE_SIZE >> 1;
+            var doubleTileSize:int = GameConsts.VIEWPORT_TILE_SIZE * 2;
             var offsetX:int = tileOffsetX;
             var offsetY:int = tileOffsetY;
             var effect:Effect = tile.firstEffect;
+            var effectX:int;
+            var effectY:int;
             while(effect) {
-                if (effect is Missile) {
+                if (effect is TextualEffect) {
+                    var textualEffect:TextualEffect = TextualEffect(effect);
+                    helper = m_textualEffects[m_textualEffectCount];
+                    helper.update(textualEffect, (offsetX - halfTileSize) + effectX, (offsetY - GameConsts.VIEWPORT_TILE_SIZE) - 2 * effect.frame);
+                    
+                    if (helper.offsetY + textualEffect.height > effectY)
+                        effectX += textualEffect.width;
+                    
+                    if (effectX < doubleTileSize) {
+                        effectY = helper.offsetY;
+                        m_textualEffectCount++;
+                    }
+                } else if (effect is Missile) {
                     if (m_missileCount < MAX_MISSILES) {
                         m_missiles[m_missileCount].update(effect, offsetX, offsetY);
                         m_missileCount++;
@@ -331,6 +356,43 @@ package royalshield.display
             }
         }
         
+        private function drawTextualEffects():void
+        {
+            var point:Point = GameUtil.POINT;
+            var matrix:Matrix = GameUtil.MATRIX;
+            matrix.identity();
+            
+            for (var i:int = 0; i < m_textualEffectCount; i++) {
+                var helper:RenderHelper = m_textualEffects[i];
+                var effect:TextualEffect = helper.object as TextualEffect;
+                if (effect) {
+                    point.x = helper.offsetX - (effect.width >> 1);
+                    point.y = helper.offsetY;
+                    point = m_matrix.transformPoint(point);
+                    
+                    if (point.x < 0)
+                        point.x = 0;
+                    
+                    if (point.x + effect.width > width)
+                        point.x = this.width - effect.width;
+                    
+                    if (point.y < 0)
+                        point.y = 0;
+                    
+                    if (point.y + effect.height > this.height)
+                        point.y = this.height - effect.height;
+                    
+                    matrix.tx = point.x;
+                    matrix.ty = point.y;
+                    
+                    graphics.beginBitmapFill(effect.bitmap, matrix, false, false);
+                    graphics.drawRect(point.x, point.y, effect.width, effect.height);
+                }
+            }
+            
+            graphics.endFill();
+        }
+        
         private function drawGrid(width:Number, height:Number):void
         {
             var size:Number = GameConsts.VIEWPORT_TILE_SIZE * this.scale;
@@ -361,5 +423,6 @@ package royalshield.display
         
         static public const MAX_CREATURES:uint = 10;
         static public const MAX_MISSILES:uint = 100;
+        static public const MAX_EFFECTS:uint = 200;
     }
 }

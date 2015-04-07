@@ -69,9 +69,9 @@ package royalshield.core
         
         public function update():void
         {
-            var elapsedTime:Number = getTimer();
-            m_world.update(elapsedTime);
-            m_display.update(elapsedTime);
+            s_elapsedTime = getTimer();
+            m_world.update(s_elapsedTime);
+            m_display.update(s_elapsedTime);
             m_display.render();
         }
         
@@ -138,6 +138,12 @@ package royalshield.core
                 new RoyalShield();
             
             return s_instance;
+        }
+        
+        static private var s_elapsedTime:Number = 0;
+        static public function getElapsedTime():Number
+        { 
+            return s_elapsedTime;
         }
     }
 }
