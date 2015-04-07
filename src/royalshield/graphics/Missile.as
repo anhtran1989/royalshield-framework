@@ -23,7 +23,7 @@ package royalshield.graphics
         private var m_speedY:int;
         private var m_timeEnd:Number;
         private var m_duration:int;
-        private var m_direction:String;
+        private var m_direction:Direction;
         
         //--------------------------------------
         // Getters / Setters
@@ -35,7 +35,7 @@ package royalshield.graphics
         public function get endY():int { return m_endY; }
         public function get missileOffsetX():int { return (m_deltaX + ((m_endX - m_startX) * GameConsts.VIEWPORT_TILE_SIZE)); }
         public function get missileOffsetY():int { return (m_deltaY + ((m_endY - m_startY) * GameConsts.VIEWPORT_TILE_SIZE)); }
-        public function get direction():String { return m_direction; }
+        public function get direction():Direction { return m_direction; }
         
         //--------------------------------------------------------------------------
         // CONSTRUCTOR

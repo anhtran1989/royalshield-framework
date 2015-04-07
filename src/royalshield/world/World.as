@@ -240,7 +240,7 @@ package royalshield.world
             creature.onWalk();
         }
         
-        public function moveCreature(creature:Creature, direction:String):Boolean
+        public function moveCreature(creature:Creature, direction:Direction):Boolean
         {
             var fromTile:Tile = creature.tile;
             var oldx:int = fromTile.x;
@@ -316,11 +316,11 @@ package royalshield.world
             return true;
         }
         
-        public function creatureTurn(creatureId:uint, direction:String):Boolean
+        public function creatureTurn(creatureId:uint, direction:Direction):Boolean
         {
             var creature:Creature = getCreatureById(creatureId);
             if (creature && creature.direction != direction) {
-                var oldDirection:String = creature.direction;
+                var oldDirection:Direction = creature.direction;
                 creature.direction = direction;
                 m_creatureTurnedSignal.dispatch(creature, oldDirection, direction);
             }

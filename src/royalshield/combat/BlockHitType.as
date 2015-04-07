@@ -1,12 +1,9 @@
 package royalshield.combat
 {
-    import royalshield.core.royalshield_internal;
     import royalshield.errors.AbstractClassError;
     import royalshield.errors.NullOrEmptyArgumentError;
     import royalshield.utils.StringUtil;
     import royalshield.utils.isNullOrEmpty;
-    
-    use namespace royalshield_internal;
     
     public final class BlockHitType
     {
@@ -30,7 +27,8 @@ package royalshield.combat
         
         public function BlockHitType(type:String, index:uint)
         {
-            if (index >= INSTANCES)
+            s_count++;
+            if (s_count > 4)
                 throw new AbstractClassError(BlockHitType);
             
             m_type = type;
@@ -54,7 +52,7 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        static royalshield_internal const INSTANCES:uint = 4;
+        static private var s_count:uint = 0;
         
         static public const NONE:BlockHitType = new BlockHitType("NONE", 0);
         static public const DEFENSE:BlockHitType = new BlockHitType("DEFENSE", 1);

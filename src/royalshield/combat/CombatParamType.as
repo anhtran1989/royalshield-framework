@@ -1,12 +1,9 @@
 package royalshield.combat
 {
-    import royalshield.core.royalshield_internal;
     import royalshield.errors.AbstractClassError;
     import royalshield.errors.NullOrEmptyArgumentError;
     import royalshield.utils.StringUtil;
     import royalshield.utils.isNullOrEmpty;
-    
-    use namespace royalshield_internal;
     
     public final class CombatParamType
     {
@@ -30,7 +27,8 @@ package royalshield.combat
         
         public function CombatParamType(type:String, index:uint)
         {
-            if (index >= INSTANCES)
+            s_count++;
+            if (s_count > 11)
                 throw new AbstractClassError(CombatParamType);
             
             m_type = type;
@@ -54,7 +52,7 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        static royalshield_internal const INSTANCES:uint = 11;
+        static private var s_count:uint = 0;
         
         static public const COMBAT_TYPE:CombatParamType = new CombatParamType("COMBAT_TYPE", 0);
         static public const MAGIC_EFFECT:CombatParamType = new CombatParamType("MAGIC_EFFECT", 1);

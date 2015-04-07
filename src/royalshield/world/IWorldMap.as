@@ -1,6 +1,7 @@
 package royalshield.world
 {
     import royalshield.entities.creatures.Creature;
+    import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
     
@@ -26,7 +27,7 @@ package royalshield.world
         function deleteTile(tile:Tile):void;
         function setPosition(x:uint, y:uint, z:uint):void;
         function moveCreature(creature:Creature, toTile:Tile):Boolean;
-        function getPathTo(creature:Creature, position:Position, directions:Vector.<String>, distance:int = -1, flags:uint = 0):Boolean;
+        function getPathTo(creature:Creature, position:Position, directions:Vector.<Direction>, distance:int = -1, flags:uint = 0):Boolean;
         function isSightClear(fromX:uint, fromY:uint, fromZ:uint, toX:uint, toY:uint, toZ:uint, floorCheck:Boolean):Boolean;
         function getSpectators(x:uint, y:uint, z:uint, list:Vector.<Creature>, multifloor:Boolean = false):void;
     }

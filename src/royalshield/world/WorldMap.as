@@ -232,7 +232,7 @@ package royalshield.world
             return null;
         }
         
-        public function getPathTo(creature:Creature, position:Position, directions:Vector.<String>, distance:int = -1, flags:uint = 0):Boolean
+        public function getPathTo(creature:Creature, position:Position, directions:Vector.<Direction>, distance:int = -1, flags:uint = 0):Boolean
         {
             if (!creature || !directions)
                 return false;
@@ -365,7 +365,7 @@ package royalshield.world
         // Private
         //--------------------------------------
         
-        private function createPath(node:AStarNode, x:int, y:int, directions:Vector.<String>):Boolean
+        private function createPath(node:AStarNode, x:int, y:int, directions:Vector.<Direction>):Boolean
         {
             if (!node || !directions)
                 return false;

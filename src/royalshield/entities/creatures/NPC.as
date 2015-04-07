@@ -53,7 +53,7 @@ package royalshield.entities.creatures
             else
                 tan = 10;
             
-            var direction:String = Direction.SOUTH;
+            var direction:Direction = Direction.SOUTH;
             if(Math.abs(tan) < 1) {
                 if(dx > 0)
                     direction = Direction.WEST;
@@ -90,16 +90,16 @@ package royalshield.entities.creatures
         // Protected
         //--------------------------------------
         
-        protected function canWalkTo(direction:String):Boolean
+        protected function canWalkTo(direction:Direction):Boolean
         {
             return true;
         }
         
-        protected function getRandomStep():String
+        protected function getRandomStep():Direction
         {
-            var dir:String = Direction.valueToDirection(Math.random() * 4);
-            if (canWalkTo(dir))
-                return dir;
+            var direction:Direction = Direction.toDirection(int(Math.random() * 4));
+            if (canWalkTo(direction))
+                return direction;
             
             return null;
         }
@@ -119,9 +119,9 @@ package royalshield.entities.creatures
                 setCreatureFocus(null);
         }
         
-        override protected function getNextStep():String
+        override protected function getNextStep():Direction
         {
-            var direction:String = super.getNextStep();
+            var direction:Direction = super.getNextStep();
             if (direction != null)
                 return direction;
             

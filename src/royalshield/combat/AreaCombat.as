@@ -182,7 +182,7 @@ package royalshield.combat
         {
             var dx:int = targetPosition.x - centerPosition.x;
             var dy:int = targetPosition.y - centerPosition.y;
-            var direction:String = Direction.NORTH;
+            var direction:Direction = Direction.NORTH;
             
             if(dx < 0)
                 direction = Direction.WEST;

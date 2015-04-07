@@ -57,8 +57,8 @@ package royalshield.entities.creatures
         private var m_animationEnd:Number;
         private var m_movementEnd:Number;
         private var m_elapsedTime:Number;
-        private var m_directionList:Vector.<String>;
-        private var m_direction:String;
+        private var m_directionList:Vector.<Direction>;
+        private var m_direction:Direction;
         private var m_position:Position;
         
         private var m_cancelNextWalk:Boolean;
@@ -98,8 +98,8 @@ package royalshield.entities.creatures
         
         public function get walking():Boolean { return m_walking; }
         
-        public function get direction():String { return m_direction; }
-        public function set direction(value:String):void
+        public function get direction():Direction { return m_direction; }
+        public function set direction(value:Direction):void
         {
             if (isNullOrEmpty(value))
                 value = Direction.NORTH;
@@ -144,7 +144,7 @@ package royalshield.entities.creatures
             m_animationEnd = 0;
             m_movementEnd = 0;
             m_elapsedTime = 0;
-            m_directionList = new Vector.<String>();
+            m_directionList = new Vector.<Direction>();
             m_direction = Direction.SOUTH;
             m_position = new Position();
             worldRemoved = true;
@@ -193,7 +193,7 @@ package royalshield.entities.creatures
             m_walking = true;
         }
         
-        public function walkTo(direction:String):void
+        public function walkTo(direction:Direction):void
         {
             if (!this.canMove) {
                 stopWalk();
@@ -205,7 +205,7 @@ package royalshield.entities.creatures
             addEventWalk();
         }
         
-        public function startAutoWalk(directions:Vector.<String>, completeHandler:Function = null):Boolean
+        public function startAutoWalk(directions:Vector.<Direction>):Boolean
         {
             if (isNullOrEmpty(directions))
                 return false;
@@ -354,7 +354,7 @@ package royalshield.entities.creatures
         public function render(canvas:GameCanvas, pointX:int, pointY:int, patternX:int = 0, patternY:int = 0, patternZ:int = 0):void
         {
             if (m_outfit)
-                m_outfit.render(canvas, pointX + m_outfit.offsetX, pointY + m_outfit.offsetY, Direction.directionToValue(direction), 0, 0);
+                m_outfit.render(canvas, pointX + m_outfit.offsetX, pointY + m_outfit.offsetY, direction.index, 0, 0);
         }
         
         public function destroy():void
@@ -377,7 +377,7 @@ package royalshield.entities.creatures
         {
             if (getWalkDelay() <= 0) {
                 var flags:uint = 0;
-                var direction:String = getNextStep();
+                var direction:Direction = getNextStep();
                 
                 if (direction != null) {
                     RoyalShield.getInstance().world.moveCreature(this, direction);
@@ -430,7 +430,7 @@ package royalshield.entities.creatures
             m_cancelNextWalk = true;
         }
         
-        protected function getStepDuration(direction:String = null):Number
+        protected function getStepDuration(direction:Direction = null):Number
         {
             if (isWorldRemoved)
                 return 0;
@@ -461,7 +461,7 @@ package royalshield.entities.creatures
             return stepDuration;
         }
         
-        protected function getWalkDelay(direction:String = null):int
+        protected function getWalkDelay(direction:Direction = null):int
         {
             if (m_lastStepTime != 0)
                 return getStepDuration(direction) - (m_elapsedTime - m_lastStepTime);
@@ -469,7 +469,7 @@ package royalshield.entities.creatures
             return 0;
         }
         
-        protected function getNextStep():String
+        protected function getNextStep():Direction
         {
             if (m_directionList.length > 0)
                 return m_directionList.shift();

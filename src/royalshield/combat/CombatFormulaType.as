@@ -27,7 +27,8 @@ package royalshield.combat
         
         public function CombatFormulaType(type:String, index:int)
         {
-            if (index >= INSTANCES)
+            s_count++;
+            if (s_count > 4)
                 throw new AbstractClassError(CombatFormulaType);
             
             m_type = type;
@@ -51,7 +52,7 @@ package royalshield.combat
         // STATIC
         //--------------------------------------------------------------------------
         
-        static private const INSTANCES:uint = 4;
+        static private var s_count:uint = 0;
         
         static public const UNDEFINED:CombatFormulaType = new CombatFormulaType("UNDEFINED", 0);
         static public const MAGIC_LEVEL:CombatFormulaType = new CombatFormulaType("MAGIC_LEVEL", 1);

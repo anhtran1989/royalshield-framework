@@ -8,6 +8,7 @@ package royalshield.core
     import royalshield.errors.NullArgumentError;
     import royalshield.errors.NullOrEmptyArgumentError;
     import royalshield.errors.SingletonClassError;
+    import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.utils.isNullOrEmpty;
     import royalshield.world.World;
@@ -75,10 +76,10 @@ package royalshield.core
             m_display.render();
         }
         
-        public function movePlayer(direction:String):void
+        public function movePlayer(direction:Direction):void
         {
-            if (isNullOrEmpty(direction))
-                throw new NullOrEmptyArgumentError("direction");
+            if (!direction)
+                throw new NullArgumentError("direction");
             
             if (m_player.isWorldRemoved) {
                 CONFIG::debug { trace("Game.movePlayer: The player isn't added in the world.") };
@@ -96,7 +97,7 @@ package royalshield.core
             if (!position)
                 throw new NullArgumentError("position");
             
-            var directions:Vector.<String> = new Vector.<String>();
+            var directions:Vector.<Direction> = new Vector.<Direction>();
             if (m_world.map.getPathTo(creature, position, directions, AStarNodes.NUM_NODES))
                 creature.startAutoWalk(directions);
         }
