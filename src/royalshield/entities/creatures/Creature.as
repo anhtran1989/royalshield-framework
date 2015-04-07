@@ -15,6 +15,7 @@ package royalshield.entities.creatures
     import royalshield.signals.Signal;
     import royalshield.utils.GameUtil;
     import royalshield.utils.IDestroyable;
+    import royalshield.utils.MinMaxValues;
     import royalshield.utils.isNullOrEmpty;
     import royalshield.world.Tile;
     import royalshield.world.WorldMap;
@@ -59,7 +60,7 @@ package royalshield.entities.creatures
         private var m_walkEvent:Boolean;
         private var m_lastStepTime:int;
         
-        private var m_onWalkCompleteSignal:Signal;
+        private var m_walkCompletedSignal:Signal;
         
         //--------------------------------------
         // Event Handlers
@@ -115,7 +116,7 @@ package royalshield.entities.creatures
         public function get tile():Tile { return containerParent; }
         public function get position():Position { return m_position; }
         
-        public function get onWalkComplete():Signal { return m_onWalkCompleteSignal; }
+        public function get onWalkCompleted():Signal { return m_walkCompletedSignal; }
         
         //--------------------------------------------------------------------------
         // CONSTRUCTOR
@@ -140,7 +141,7 @@ package royalshield.entities.creatures
             m_position = new Position();
             worldRemoved = true;
             
-            m_onWalkCompleteSignal = new Signal();
+            m_walkCompletedSignal = new Signal();
         }
         
         //--------------------------------------------------------------------------
@@ -224,6 +225,11 @@ package royalshield.entities.creatures
                 return (m_elapsedTime - m_lastStepTime);
             
             return int.MAX_VALUE;
+        }
+        
+        public function getCombatValues(mmv:MinMaxValues):MinMaxValues
+        {
+            return null;
         }
         
         public function stopWalk():void
@@ -325,6 +331,8 @@ package royalshield.entities.creatures
         {
             m_outfit = null;
             m_id = 0;
+            
+            m_walkCompletedSignal.removeAll();
         }
         
         //--------------------------------------
@@ -341,7 +349,7 @@ package royalshield.entities.creatures
                     RoyalShield.getInstance().world.moveCreature(this, direction);
                 } else {
                     if (m_directionList.length == 0)
-                        m_onWalkCompleteSignal.dispatch();
+                        m_walkCompletedSignal.dispatch();
                     
                     stopEventWalk();
                 }
@@ -437,7 +445,7 @@ package royalshield.entities.creatures
         
         protected function onWalkAborted():void
         {
-            
+            //
         }
         
         //--------------------------------------------------------------------------
