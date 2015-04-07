@@ -1,5 +1,6 @@
 package royalshield.utils
 {
+    import flash.geom.Matrix;
     import flash.geom.Point;
     import flash.geom.Rectangle;
     
@@ -23,7 +24,9 @@ package royalshield.utils
         //--------------------------------------------------------------------------
         
         static public const ZERO_POINT:Point = new Point();
+        static public const POINT:Point = new Point();
         static public const RECTANGLE:Rectangle = new Rectangle();
+        static public const MATRIX:Matrix = new Matrix();
         static public const POSITION:Position = new Position();
         static public const MAX_MIN_VALUES:MinMaxValues = new MinMaxValues();
         static public const CREATURE_VECTOR:Vector.<Creature> = new Vector.<Creature>();

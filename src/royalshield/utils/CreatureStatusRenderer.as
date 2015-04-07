@@ -78,12 +78,12 @@ package royalshield.utils
             var x:Number = Math.max(1, Math.min(point.x - rect.width / 2, display.width - rect.width - 1));
             var y:Number = Math.max(0, Math.min(point.y - (rect.height + 20), display.height - (rect.height + 20)));
             
-            MATRIX_HELPER.identity();
-            MATRIX_HELPER.tx = x - rect.x;
-            MATRIX_HELPER.ty = y - rect.y;
+            GameUtil.MATRIX.identity();
+            GameUtil.MATRIX.tx = x - rect.x;
+            GameUtil.MATRIX.ty = y - rect.y;
             
             var g:Graphics = display.graphics;
-            g.beginBitmapFill(this, MATRIX_HELPER, false);
+            g.beginBitmapFill(this, GameUtil.MATRIX, false);
             g.drawRect(x, y, rect.width, rect.height);
             
             // ==================================================================
@@ -153,11 +153,11 @@ package royalshield.utils
                 
                 rect.width = m_textField.width;
                 rect.height = m_textField.height;
-                MATRIX_HELPER.identity();
-                MATRIX_HELPER.tx = rect.x;
-                MATRIX_HELPER.ty = rect.y;
+                GameUtil.MATRIX.identity();
+                GameUtil.MATRIX.tx = rect.x;
+                GameUtil.MATRIX.ty = rect.y;
                 
-                draw(m_textField, MATRIX_HELPER, null, null, null, false);
+                draw(m_textField, GameUtil.MATRIX, null, null, null, false);
             }
         }
         
@@ -209,12 +209,6 @@ package royalshield.utils
         {
             return index < m_length ? m_names[index] : null;
         }
-        
-        //--------------------------------------------------------------------------
-        // STATIC
-        //--------------------------------------------------------------------------
-        
-        static private const MATRIX_HELPER:Matrix = new Matrix();
     }
 }
 

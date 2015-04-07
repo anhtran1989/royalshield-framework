@@ -12,6 +12,7 @@ package royalshield.world
     import royalshield.graphics.IUpdatable;
     import royalshield.signals.Signal;
     import royalshield.utils.CreatureChecker;
+    import royalshield.utils.GameUtil;
     import royalshield.utils.ThingUpdater;
     
     use namespace royalshield_internal;
@@ -303,11 +304,13 @@ package royalshield.world
             creature.startWalk(newx - oldx, newy - oldy);
             creature.direction = direction;
             
-            CREATURE_VECTOR.length = 0;
-            m_map.getSpectators(oldx, oldy, oldz, CREATURE_VECTOR, true);
-            m_map.getSpectators(newx, newy, newz, CREATURE_VECTOR, true);
-            for (var i:uint = 0; i < CREATURE_VECTOR.length; i++)
-                CREATURE_VECTOR[i].onCreatureMove(creature, fromTile, toTile, false);
+            var spectatores:Vector.<Creature> = GameUtil.CREATURE_VECTOR;
+            spectatores.length = 0;
+            m_map.getSpectators(oldx, oldy, oldz, spectatores, true);
+            m_map.getSpectators(newx, newy, newz, spectatores, true);
+            
+            for (var i:uint = 0; i < spectatores.length; i++)
+                spectatores[i].onCreatureMove(creature, fromTile, toTile, false);
             
             m_creatureMovedSignal.dispatch(creature);
             return true;
@@ -394,11 +397,5 @@ package royalshield.world
                 }
             }
         }
-        
-        //--------------------------------------------------------------------------
-        // STATIC
-        //--------------------------------------------------------------------------
-        
-        static private const CREATURE_VECTOR:Vector.<Creature> = new Vector.<Creature>();
     }
 }

@@ -15,6 +15,7 @@ package royalshield.display
     import royalshield.graphics.Effect;
     import royalshield.graphics.Missile;
     import royalshield.utils.CreatureStatusRenderer;
+    import royalshield.utils.GameUtil;
     import royalshield.utils.RenderHelper;
     import royalshield.world.Tile;
     import royalshield.world.WorldMap;
@@ -314,8 +315,8 @@ package royalshield.display
                 var helper:RenderHelper = m_drawnCreatures[i];
                 var creature:Creature = helper.object as Creature;
                 if (creature) {
-                    POINT.setTo(helper.offsetX - (GameConsts.VIEWPORT_TILE_SIZE * 0.5), helper.offsetY - GameConsts.VIEWPORT_TILE_SIZE);
-                    m_statusRenderer.drawName(this, creature, m_matrix, POINT);
+                    GameUtil.POINT.setTo(helper.offsetX - (GameConsts.VIEWPORT_TILE_SIZE * 0.5), helper.offsetY - GameConsts.VIEWPORT_TILE_SIZE);
+                    m_statusRenderer.drawName(this, creature, m_matrix, GameUtil.POINT);
                 }
             }
         }
@@ -360,6 +361,5 @@ package royalshield.display
         
         static public const MAX_CREATURES:uint = 10;
         static public const MAX_MISSILES:uint = 100;
-        static public const POINT:Point = new Point();
     }
 }
