@@ -1,5 +1,6 @@
 package royalshield.entities.creatures
 {
+    import royalshield.collections.CreatureList;
     import royalshield.collections.IGameObjectContainer;
     import royalshield.core.GameConsts;
     import royalshield.core.RoyalShield;
@@ -39,6 +40,10 @@ package royalshield.entities.creatures
         protected var m_heathPercent:uint;
         protected var m_baseSpeed:int;
         protected var m_variableSpeed:int;
+        
+        // Summon
+        protected var m_summons:CreatureList;
+        protected var m_master:Creature;
         
         private var m_outfit:Outfit;
         private var m_walkOffsetX:int;
@@ -115,6 +120,9 @@ package royalshield.entities.creatures
         public function get isWorldRemoved():Boolean { return worldRemoved; }
         public function get tile():Tile { return containerParent; }
         public function get position():Position { return m_position; }
+        
+        public function get isSummon():Boolean { return (m_master != null); }
+        public function get master():Creature { return m_master; }
         
         public function get onWalkCompleted():Signal { return m_walkCompletedSignal; }
         
@@ -277,6 +285,28 @@ package royalshield.entities.creatures
             //
         }
         
+        public function addSummon(creature:Creature):void
+        {
+            if (!m_summons)
+                m_summons = new CreatureList();
+            else if (m_summons.has(creature))
+                return;
+            
+            creature.m_master = this;
+            m_summons.push(creature);
+        }
+        
+        public function removeSummon(creature:Creature):void
+        {
+            if (m_summons && m_summons.has(creature)) {
+                m_summons.remove(creature);
+                creature.m_master = null;
+                
+                if (m_summons.isEmpty())
+                    m_summons = null;
+            }
+        }
+        
         public function update(elapsedTime:Number):Boolean
         {
             if (isWorldRemoved)
@@ -329,8 +359,12 @@ package royalshield.entities.creatures
         
         public function destroy():void
         {
+            if (m_summons)
+                m_summons.clear();
+            
             m_outfit = null;
             m_id = 0;
+            m_summons = null;
             
             m_walkCompletedSignal.removeAll();
         }
