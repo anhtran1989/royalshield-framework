@@ -14,10 +14,12 @@ package royalshield.entities.creatures
     import royalshield.graphics.IUpdatable;
     import royalshield.graphics.Outfit;
     import royalshield.signals.Signal;
+    import royalshield.utils.FindPathParams;
     import royalshield.utils.GameUtil;
     import royalshield.utils.IDestroyable;
     import royalshield.utils.MinMaxValues;
     import royalshield.utils.isNullOrEmpty;
+    import royalshield.world.IWorldMap;
     import royalshield.world.Tile;
     import royalshield.world.WorldMap;
     
@@ -44,6 +46,12 @@ package royalshield.entities.creatures
         // Summon
         protected var m_summons:CreatureList;
         protected var m_master:Creature;
+        
+        // Follow
+        protected var m_followCreature:Creature;
+        protected var m_hasFollowPath:Boolean;
+        protected var m_forceUpdateFollowPath:Boolean;
+        protected var m_isUpdatingPath:Boolean;
         
         private var m_outfit:Outfit;
         private var m_walkOffsetX:int;
@@ -307,6 +315,52 @@ package royalshield.entities.creatures
             }
         }
         
+        public function setFollowCreature(creature:Creature):Boolean
+        {
+            if (creature) {
+                if (m_followCreature == creature)
+                    return true;
+                
+                if (this.position.z != creature.position.z || !canSeePosition(creature.position)) {
+                    m_followCreature = null;
+                    return false;
+                }
+                
+                if (m_directionList.length != 0) {
+                    m_directionList.length = 0;
+                    onWalkAborted();
+                }
+                
+                m_hasFollowPath = false;
+                m_forceUpdateFollowPath = false;
+                m_followCreature = creature;
+                m_isUpdatingPath = true;
+            } else {
+                m_isUpdatingPath = false;
+                m_followCreature = null;
+            }
+            
+            onFollowCreature(creature);
+            return true;
+        }
+        
+        public function goToFollowCreature():void
+        {
+            if (m_followCreature) {
+                var fpp:FindPathParams = new FindPathParams();
+                getPathSearchParams(m_followCreature, fpp);
+                
+                var map:IWorldMap = RoyalShield.getInstance().world.map;
+                if(map.getPathMatching(this, m_directionList, m_followCreature.position, fpp)) {
+                    m_hasFollowPath = true;
+                    startAutoWalk(m_directionList);
+                } else
+                    m_hasFollowPath = false;
+            }
+            
+            onFollowCreatureComplete(m_followCreature);
+        }
+        
         public function update(elapsedTime:Number):Boolean
         {
             if (isWorldRemoved)
@@ -487,7 +541,26 @@ package royalshield.entities.creatures
             return null;
         }
         
+        protected function getPathSearchParams(creature:Creature, fpp:FindPathParams):void
+        {
+            fpp.fullPathSearch = !m_hasFollowPath;
+            fpp.clearSight = true;
+            fpp.maxSearchDist = 12;
+            fpp.minTargetDist = 1;
+            fpp.maxTargetDist = 1;
+        }
+        
         protected function onWalkAborted():void
+        {
+            //
+        }
+        
+        protected function onFollowCreature(creature:Creature):void
+        {
+            //
+        }
+        
+        protected function onFollowCreatureComplete(creature:Creature):void
         {
             //
         }

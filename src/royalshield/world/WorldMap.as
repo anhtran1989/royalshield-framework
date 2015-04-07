@@ -8,8 +8,11 @@ package royalshield.world
     import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
+    import royalshield.utils.FindPathParams;
+    import royalshield.utils.GameUtil;
     import royalshield.world.utils.AStarNode;
     import royalshield.world.utils.AStarNodes;
+    import royalshield.world.utils.FrozenPathingConditionCall;
     
     use namespace royalshield_internal;
     
@@ -29,6 +32,7 @@ package royalshield.world
         private var m_positionChangedSignal:Signal;
         private var m_dirtySignal:Signal;
         private var m_nodes:AStarNodes;
+        private var m_fpcc:FrozenPathingConditionCall;
         
         //--------------------------------------
         // Getters / Setters 
@@ -61,6 +65,7 @@ package royalshield.world
             m_positionChangedSignal = new Signal();
             m_dirtySignal = new Signal();
             m_nodes = new AStarNodes();
+            m_fpcc = new FrozenPathingConditionCall();
         }
         
         //--------------------------------------------------------------------------
@@ -322,6 +327,95 @@ package royalshield.world
             return createPath(found, endx, endy, directions);
         }
         
+        public function getPathMatching(creature:Creature, directions:Vector.<Direction>, targetPosition:Position, fpp:FindPathParams):Boolean
+        {
+            directions.length = 0;
+            m_nodes.clear();
+            m_fpcc.setTo(targetPosition);
+            
+            var startx:uint = creature.position.x;
+            var starty:uint = creature.position.y;
+            var startz:uint = creature.position.z;
+            var endx:uint;
+            var endy:uint;
+            var endz:uint;
+            var found:AStarNode;
+            var posz:uint = startz;
+            var startNode:AStarNode = m_nodes.createOpenNode();
+            startNode.x = startx;
+            startNode.y = starty;
+            startNode.f = 0;
+            startNode.parent = null;
+            
+            GameUtil.POINT.x = 0;
+            
+            while(fpp.maxSearchDist != -1 || m_nodes.closedNodesLength < 100) {
+                var node:AStarNode = m_nodes.getBestNode();
+                if (!node) {
+                    if (found) break;
+                    directions.length = 0;
+                    return false;
+                }
+                
+                if (m_fpcc.testPosition(startx, starty, startz, node.x, node.y, startz, fpp, GameUtil.POINT)) {
+                    found = node;
+                    endx = node.x;
+                    endy = node.y;
+                    endz = startz;
+                    
+                    if (GameUtil.POINT.x == 0) break;
+                }
+                
+                var length:uint = (fpp.allowDiagonal ? 8 : 4);
+                for (var i:int = 0; i < length; i++) {
+                    var point:Point = RELATIONAL_POINTS[i];
+                    var posx:uint = node.x + point.x;
+                    var posy:uint = node.y + point.y;
+                    var inRange:Boolean = true;
+                    
+                    if (fpp.maxSearchDist != -1 && (Math.abs(startx - posx) > fpp.maxSearchDist || Math.abs(starty - posy) > fpp.maxSearchDist)) 
+                        inRange = false;
+                    
+                    if(fpp.keepDistance) {
+                        if(!m_fpcc.inRange(startx, starty, startz, posx, posy, posz, fpp))
+                            inRange = false;
+                    }
+                    
+                    if(inRange) {
+                        var tile:Tile = getWalkableTile(creature, posx, posy, posz);
+                        if (tile) {
+                            var cost:int = m_nodes.getMapWalkCost(creature, node, tile, posx, posy, posz);
+                            var extraCost:int = m_nodes.getTileWalkCost(creature, tile);
+                            var newf:int = (node.f + cost + extraCost);
+                            var neighbourNode:AStarNode = m_nodes.getNode(posx, posy);
+                            
+                            if (neighbourNode) {
+                                if(neighbourNode.f <= newf) continue;
+                                m_nodes.openNode(neighbourNode);
+                            } else {
+                                neighbourNode = m_nodes.createOpenNode();
+                                if(!neighbourNode) {
+                                    if(found) break;
+                                    directions.length = 0;
+                                    return false;
+                                }
+                                
+                                neighbourNode.x = posx;
+                                neighbourNode.y = posy;
+                            }
+                            
+                            neighbourNode.parent = node;
+                            neighbourNode.f = newf;
+                        }
+                    }
+                }
+                
+                m_nodes.closeNode(node);
+            }
+            
+            return found ? createPathMatching(found, endx, endy, directions) : false;
+        }
+        
         public function isSightClear(fromX:uint, fromY:uint, fromZ:uint, toX:uint, toY:uint, toZ:uint, floorCheck:Boolean):Boolean
         {
             return true;
@@ -401,6 +495,45 @@ package royalshield.world
                 node = node.parent;
             }
             return (directions.length != 0);
+        }
+        
+        private function createPathMatching(node:AStarNode, x:int, y:int, directions:Vector.<Direction>):Boolean
+        {
+            if (!node || !directions)
+                return false;
+            
+            var prevx:int = x;
+            var prevy:int = y;
+            node = node.parent;
+            
+            while (node) {
+                var posx:int = node.x;
+                var posy:int = node.y;
+                var dx:int = posx - prevx;
+                var dy:int = posy - prevy;
+                prevx = posx;
+                prevy = posy;
+                
+                if (dx == 1 && dy == 1)
+                    directions.unshift(Direction.NORTHWEST);
+                else if (dx == -1 && dy == 1)
+                    directions.unshift(Direction.NORTHEAST);
+                else if (dx == 1 && dy == -1)
+                    directions.unshift(Direction.SOUTHWEST);
+                else if (dx == -1 && dy == -1)
+                    directions.unshift(Direction.SOUTHEAST);
+                else if (dx == 1)
+                    directions.unshift(Direction.WEST);
+                else if (dx == -1)
+                    directions.unshift(Direction.EAST);
+                else if (dy == 1)
+                    directions.unshift(Direction.NORTH);
+                else if (dy == -1)
+                    directions.unshift(Direction.SOUTH);
+                
+                node = node.parent;
+            }
+            return true;
         }
         
         //--------------------------------------------------------------------------
