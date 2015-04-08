@@ -5,6 +5,7 @@ package royalshield.world
     
     import royalshield.core.royalshield_internal;
     import royalshield.entities.creatures.Creature;
+    import royalshield.entities.items.Item;
     import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
@@ -210,11 +211,13 @@ package royalshield.world
         
         public function setPosition(x:uint, y:uint, z:uint):void
         {
-            if (!inMapRange(x, y, z))
-                throw new ArgumentError("The coordinates are out of range.");
-            
-            m_position.setTo(x, y, z);
-            m_positionChangedSignal.dispatch(x, y, z);
+            if (m_position.x != x || m_position.y != y || m_position.z != z) {
+                if (!inMapRange(x, y, z))
+                    throw new ArgumentError("The coordinates are out of range.");
+                
+                m_position.setTo(x, y, z);
+                m_positionChangedSignal.dispatch(x, y, z);
+            }
         }
         
         public function moveCreature(creature:Creature, toTile:Tile):Boolean
@@ -446,6 +449,15 @@ package royalshield.world
                     }
                 }
             }
+        }
+        
+        public function getTopItemAt(x:uint, y:uint, z:uint):Item
+        {
+            var tile:Tile = getTile(x, y, z);
+            if (tile)
+                return tile.getItemAt(tile.itemCount - 1);
+            
+            return null;
         }
         
         public function clear():void

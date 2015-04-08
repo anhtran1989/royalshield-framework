@@ -9,5 +9,6 @@ package royalshield.collections
         function addItem(item:Item):Boolean;
         function removeItem(item:Item):Boolean;
         function getItemAt(index:int):Item;
+        function indexOfItem(item:Item):int;
     }
 }

@@ -141,6 +141,28 @@ package royalshield.world
             return null;
         }
         
+        public function indexOfItem(item:Item):int
+        {
+            if (!item || m_itemCount == 0)
+                return -1;
+            
+            var index:int = 0;
+            
+            if (m_ground) {
+                if (item == m_ground)
+                    return 0;
+                
+                index++;
+            }
+            
+            if (m_items) {
+                var i:int = m_items.indexOf(item);
+                if (i != -1)
+                    return (i + index);
+            }
+            return -1;
+        }
+        
         public function addCreature(creature:Creature):Boolean
         {
             if (!creature)

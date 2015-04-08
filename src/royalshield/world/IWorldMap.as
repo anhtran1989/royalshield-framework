@@ -1,6 +1,7 @@
 package royalshield.world
 {
     import royalshield.entities.creatures.Creature;
+    import royalshield.entities.items.Item;
     import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
@@ -31,5 +32,6 @@ package royalshield.world
         function getPathMatching(creature:Creature, directions:Vector.<Direction>, targetPosition:Position, fpp:FindPathParams):Boolean;
         function isSightClear(fromX:uint, fromY:uint, fromZ:uint, toX:uint, toY:uint, toZ:uint, floorCheck:Boolean):Boolean;
         function getSpectators(x:uint, y:uint, z:uint, list:Vector.<Creature>, multifloor:Boolean = false):void;
+        function getTopItemAt(x:uint, y:uint, z:uint):Item;
     }
 }
