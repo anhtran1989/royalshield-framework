@@ -70,7 +70,7 @@ package royalshield.world.utils
             return false;
         }
         
-        public function inRange(startx:int, starty:int, startz:int, testx:int, testy:int, testz:int,fpp:FindPathParams):Boolean
+        public function inRange(startx:int, starty:int, startz:int, testx:int, testy:int, testz:int, fpp:FindPathParams):Boolean
         {
             var dxMax:int = ((fpp.fullPathSearch || (startx - m_x) >= 0) ? fpp.maxTargetDist : 0);
             if(testx > (m_x + dxMax))

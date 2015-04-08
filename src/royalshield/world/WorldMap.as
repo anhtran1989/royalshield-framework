@@ -42,7 +42,6 @@ package royalshield.world
         public function get width():uint { return m_width; }
         public function get height():uint { return m_height; }
         public function get layers():uint { return m_layers; }
-        public function get tileSize():uint { return 32; }
         public function get tileCount():uint { return m_tileCount; }
         public function get x():uint { return m_position.x; }
         public function get y():uint { return m_position.y; }
