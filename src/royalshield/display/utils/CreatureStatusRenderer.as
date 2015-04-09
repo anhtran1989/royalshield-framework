@@ -71,13 +71,13 @@ package royalshield.display.utils
         {
             point = matrix.transformPoint(point);
             
-            var healthColor:uint = 0x60C060;
+            var healthColor:uint = getPercentColor(creature.healthPercent);
             var rect:Rectangle = getNameRect(creature, healthColor);
             
             // ==================================================================
             // Draw name
             
-            var x:Number = Math.max(1, Math.min(point.x - rect.width / 2, display.width - rect.width - 1));
+            var x:Number = Math.max(1, Math.min(point.x - rect.width * 0.5, display.width - rect.width - 1));
             var y:Number = Math.max(0, Math.min(point.y - (rect.height + 20), display.height - (rect.height + 20)));
             
             GameUtil.MATRIX.identity();
@@ -109,17 +109,14 @@ package royalshield.display.utils
             if (m_values[value] != undefined)
                 return CreatureName(m_values[value]).rectangle;
             
-            if (m_indexList.length == 0)
-            {
+            if (m_indexList.length == 0) {
                 name = getNameAt(0);
                 delete m_values[name.value];
                 
                 name.value = value;
                 m_values[value] = name;
                 updateKey(name, m_sequence);
-            }
-            else
-            {
+            } else {
                 name = new CreatureName();
                 name.value = value;
                 name.index = m_indexList.pop();
@@ -142,13 +139,11 @@ package royalshield.display.utils
         
         private function writeName(rect:Rectangle, name:String, color:uint):void
         {
-            if (rect && !isNullOrEmpty(name))
-            {
+            if (rect && !isNullOrEmpty(name)) {
                 m_textField.textColor = color;
                 m_textField.text = name;
                 
-                if (m_textField.width > m_width)
-                {
+                if (m_textField.width > m_width) {
                     var length:int = m_textField.getCharIndexAtPoint(m_width, m_textField.height >> 1);
                     m_textField.text = name.substr(0, length);
                 }
@@ -176,8 +171,7 @@ package royalshield.display.utils
         
         private function updateKey(name:CreatureName, newKey:int):void
         {
-            if (name.position < m_length && name.key != newKey)
-            {
+            if (name.position < m_length && name.key != newKey) {
                 name.key = newKey;
                 updateNameList(name.position);
             }
@@ -185,8 +179,7 @@ package royalshield.display.utils
         
         private function updateNameList(position:int):void
         {
-            while (true)
-            {
+            while (true) {
                 var index:int = ((position + 1) << 1) - 1;
                 var next:int = index + 1;
                 var pos:int = position;
@@ -210,6 +203,22 @@ package royalshield.display.utils
         private function getNameAt(index:int):CreatureName
         {
             return index < m_length ? m_names[index] : null;
+        }
+        
+        private function getPercentColor(percent:uint):uint
+        {
+            if (percent < 4)
+                return 0x600000;
+            else if (percent < 10)
+                return 0xC00000;
+            else if (percent < 30)
+                return 0xC03030;
+            else if (percent < 60)
+                return 0xC0C000;
+            else if (percent < 95)
+                return 0x60C060;
+            
+            return 0x00C000;
         }
     }
 }
