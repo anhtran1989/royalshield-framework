@@ -1,4 +1,4 @@
-package royalshield.utils
+package royalshield.display.utils
 {
     import flash.display.BitmapData;
     import flash.display.Graphics;
@@ -14,6 +14,8 @@ package royalshield.utils
     
     import royalshield.display.GameDisplay;
     import royalshield.entities.creatures.Creature;
+    import royalshield.utils.GameUtil;
+    import royalshield.utils.isNullOrEmpty;
     
     public class CreatureStatusRenderer extends BitmapData
     {

@@ -15,9 +15,9 @@ package royalshield.display
     import royalshield.graphics.Effect;
     import royalshield.graphics.Missile;
     import royalshield.graphics.TextualEffect;
-    import royalshield.utils.CreatureStatusRenderer;
+    import royalshield.display.utils.CreatureStatusRenderer;
     import royalshield.utils.GameUtil;
-    import royalshield.utils.RenderHelper;
+    import royalshield.display.utils.RenderHelper;
     import royalshield.world.Tile;
     import royalshield.world.WorldMap;
     

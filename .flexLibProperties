@@ -46,11 +46,11 @@
     <classEntry path="royalshield.textures.SpriteSheet"/>
     <classEntry path="royalshield.utils.ClassUtil"/>
     <classEntry path="royalshield.utils.CreatureChecker"/>
-    <classEntry path="royalshield.utils.CreatureStatusRenderer"/>
+    <classEntry path="royalshield.display.utils.CreatureStatusRenderer"/>
     <classEntry path="royalshield.utils.GameUtil"/>
     <classEntry path="royalshield.utils.IDestroyable"/>
     <classEntry path="royalshield.utils.isNullOrEmpty"/>
-    <classEntry path="royalshield.utils.RenderHelper"/>
+    <classEntry path="royalshield.display.utils.RenderHelper"/>
     <classEntry path="royalshield.utils.ThingUpdater"/>
     <classEntry path="royalshield.world.IWorldMap"/>
     <classEntry path="royalshield.world.Tile"/>
