@@ -19,8 +19,8 @@ package royalshield.utils
         
         static public function toBoolean(value:Object):Boolean
         {
-            if (value is String && (value == "true" || value == "yes" || value == "y"))
-                return true;
+            if (value is String && (value == "false" || value == "no" || value == "n"))
+                return false;
             
             return Boolean(value);
         }

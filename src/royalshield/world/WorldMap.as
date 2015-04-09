@@ -11,6 +11,8 @@ package royalshield.world
     import royalshield.signals.Signal;
     import royalshield.utils.FindPathParams;
     import royalshield.utils.GameUtil;
+    import royalshield.utils.StringUtil;
+    import royalshield.utils.isNullOrEmpty;
     import royalshield.world.utils.AStarNode;
     import royalshield.world.utils.AStarNodes;
     import royalshield.world.utils.FrozenPathingConditionCall;
@@ -26,6 +28,7 @@ package royalshield.world
         private var m_width:uint;
         private var m_height:uint;
         private var m_layers:uint;
+        private var m_name:String;
         private var m_tiles:Dictionary;
         private var m_tileCount:uint;
         private var m_maxTileCount:uint;
@@ -43,6 +46,7 @@ package royalshield.world
         public function get width():uint { return m_width; }
         public function get height():uint { return m_height; }
         public function get layers():uint { return m_layers; }
+        public function get name():String { return m_name; }
         public function get tileCount():uint { return m_tileCount; }
         public function get x():uint { return m_position.x; }
         public function get y():uint { return m_position.y; }
@@ -55,11 +59,12 @@ package royalshield.world
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function WorldMap(width:uint = 64, height:uint = 64, layers:uint = 1)
+        public function WorldMap(width:uint = 64, height:uint = 64, layers:uint = 1, name:String = null)
         {
             m_width = Math.max(64, width);
             m_height = Math.max(64, height);
             m_layers = Math.max(1, layers);
+            m_name = isNullOrEmpty(name) ? StringUtil.randomKeyString() : name;
             m_tiles = new Dictionary();
             m_tileCount = 0;
             m_maxTileCount = m_width * m_height * m_layers;

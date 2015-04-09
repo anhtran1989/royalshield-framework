@@ -12,6 +12,7 @@ package royalshield.world
         function get width():uint;
         function get height():uint;
         function get layers():uint;
+        function get name():String;
         function get x():uint;
         function get y():uint;
         function get z():uint;
