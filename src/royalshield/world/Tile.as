@@ -74,7 +74,7 @@ package royalshield.world
         public function queryAdd(thing:GameObject):Boolean
         {
             if (thing is Creature) {
-                if (hasFlag(TileFlags.SOLID) || m_firstCreature)
+                if (hasFlag(TileFlags.SOLID) || m_firstCreature || m_creaturesCount >= MAX_CREATURES)
                     return false;
             }
             return true;
@@ -96,6 +96,8 @@ package royalshield.world
             } else {
                 if (!m_items)
                     m_items = new Vector.<Item>();
+                else if (m_itemCount >= MAX_ITEMS)
+                    return false;
                 
                 m_items[m_items.length] = item;
                 m_itemCount++;

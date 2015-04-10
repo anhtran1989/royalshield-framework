@@ -25,8 +25,8 @@ package royalshield.world
         function setTile(x:uint, y:uint, z:uint, flags:uint = 0):Tile;
         function getTileByIndex(index:int):Tile;
         function hasTileAt(x:uint, y:uint, z:uint):Boolean;
-        function deleteTileAt(x:uint, y:uint, z:uint):void;
-        function deleteTile(tile:Tile):void;
+        function deleteTileAt(x:uint, y:uint, z:uint):Boolean;
+        function deleteTile(tile:Tile):Boolean;
         function setPosition(x:uint, y:uint, z:uint):void;
         function moveCreature(creature:Creature, toTile:Tile):Boolean;
         function getPathTo(creature:Creature, position:Position, directions:Vector.<Direction>, distance:int = -1, flags:uint = 0):Boolean;

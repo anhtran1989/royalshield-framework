@@ -199,7 +199,7 @@ package royalshield.world
          * @param y The Y coordinate on the map.
          * @param z The Z coordinate on the map.
          */
-        public function deleteTileAt(x:uint, y:uint, z:uint):void
+        public function deleteTileAt(x:uint, y:uint, z:uint):Boolean
         {
             if (x < m_width && y < m_height && z < m_layers) {
                 // Tile index.
@@ -208,14 +208,15 @@ package royalshield.world
                     delete m_tiles[index];
                     m_tileCount = Math.max(0, m_tileCount - 1);
                     m_dirtySignal.dispatch();
+                    return true;
                 }
             }
+            return false;
         }
         
-        public function deleteTile(tile:Tile):void
+        public function deleteTile(tile:Tile):Boolean
         {
-            if (tile)
-                deleteTileAt(tile.x, tile.y, tile.z);
+            return tile ? deleteTileAt(tile.x, tile.y, tile.z) : false;
         }
         
         public function setPosition(x:uint, y:uint, z:uint):void

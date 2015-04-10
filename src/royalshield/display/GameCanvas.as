@@ -10,9 +10,12 @@ package royalshield.display
         // PROPERTIES
         //--------------------------------------------------------------------------
         
+        public var useAlphaBitmapData:Boolean;
+        
         private var m_rect:Rectangle;
         private var m_point:Point;
         private var m_fillRect:Rectangle;
+        private var m_alphaBitmapData:BitmapData;
         
         //--------------------------------------------------------------------------
         // CONSTRUCTOR
@@ -25,6 +28,7 @@ package royalshield.display
             m_rect = new Rectangle();
             m_point = new Point();
             m_fillRect = new Rectangle(0, 0, width, height);
+            m_alphaBitmapData = new BitmapData(64, 64, true, 0x5FFFFFFF);
         }
         
         //--------------------------------------------------------------------------
@@ -39,7 +43,7 @@ package royalshield.display
         {
             m_rect.setTo(rx, ry, rw, rh);
             m_point.setTo(px, py);
-            copyPixels(source, m_rect, m_point, null, null, true);
+            copyPixels(source, m_rect, m_point, useAlphaBitmapData ? m_alphaBitmapData : null, null, true);
         }
         
         public function erase(color:uint = 0xFF000000):void
