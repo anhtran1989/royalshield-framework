@@ -30,5 +30,12 @@ package royalshield.core
         static public const VIEWPORT_PLAYER_OFFSET_Y:uint = 6;
         static public const WORLD_UPDATE_INTERVAL:uint = 40;
         static public const WORLD_MAX_EFFECTS:uint = 100;
+        
+        static public const MIN_MAP_WIDTH:uint = 32;
+        static public const MAX_MAP_WIDTH:uint = 1024;
+        static public const MIN_MAP_HEIGHT:uint = 32;
+        static public const MAX_MAP_HEIGHT:uint = 1024;
+        static public const MIN_MAP_LAYERS:uint = 1;
+        static public const MAX_MAP_LAYERS:uint = 8;
     }
 }

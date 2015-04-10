@@ -54,7 +54,7 @@ package royalshield.world
         
         public function World()
         {
-            m_map = new WorldMap();
+            m_map = new WorldMap("default");
             m_creatures = new Dictionary();
             m_thingUpdater = new ThingUpdater();
             m_creatureChecker = new CreatureChecker();

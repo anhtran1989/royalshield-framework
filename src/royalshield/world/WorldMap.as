@@ -3,15 +3,16 @@ package royalshield.world
     import flash.geom.Point;
     import flash.utils.Dictionary;
     
+    import royalshield.core.GameConsts;
     import royalshield.core.royalshield_internal;
     import royalshield.entities.creatures.Creature;
     import royalshield.entities.items.Item;
+    import royalshield.errors.NullOrEmptyArgumentError;
     import royalshield.geom.Direction;
     import royalshield.geom.Position;
     import royalshield.signals.Signal;
     import royalshield.utils.FindPathParams;
     import royalshield.utils.GameUtil;
-    import royalshield.utils.StringUtil;
     import royalshield.utils.isNullOrEmpty;
     import royalshield.world.utils.AStarNode;
     import royalshield.world.utils.AStarNodes;
@@ -25,10 +26,10 @@ package royalshield.world
         // PROPERTIES
         //--------------------------------------------------------------------------
         
+        private var m_name:String;
         private var m_width:uint;
         private var m_height:uint;
         private var m_layers:uint;
-        private var m_name:String;
         private var m_tiles:Dictionary;
         private var m_tileCount:uint;
         private var m_maxTileCount:uint;
@@ -43,10 +44,10 @@ package royalshield.world
         // Getters / Setters 
         //--------------------------------------
         
+        public function get name():String { return m_name; }
         public function get width():uint { return m_width; }
         public function get height():uint { return m_height; }
         public function get layers():uint { return m_layers; }
-        public function get name():String { return m_name; }
         public function get tileCount():uint { return m_tileCount; }
         public function get x():uint { return m_position.x; }
         public function get y():uint { return m_position.y; }
@@ -59,12 +60,15 @@ package royalshield.world
         // CONSTRUCTOR
         //--------------------------------------------------------------------------
         
-        public function WorldMap(width:uint = 64, height:uint = 64, layers:uint = 1, name:String = null)
+        public function WorldMap(name:String, width:uint = 64, height:uint = 64, layers:uint = 1)
         {
-            m_width = Math.max(64, width);
-            m_height = Math.max(64, height);
-            m_layers = Math.max(1, layers);
-            m_name = isNullOrEmpty(name) ? StringUtil.randomKeyString() : name;
+            if (isNullOrEmpty(name))
+                throw new NullOrEmptyArgumentError(name);
+            
+            m_name = name;
+            m_width = Math.min(GameConsts.MAX_MAP_WIDTH, Math.max(GameConsts.MIN_MAP_WIDTH, width));
+            m_height = Math.min(GameConsts.MAX_MAP_HEIGHT, Math.max(GameConsts.MIN_MAP_HEIGHT, height));
+            m_layers = Math.min(GameConsts.MAX_MAP_LAYERS, Math.max(GameConsts.MIN_MAP_LAYERS, layers));
             m_tiles = new Dictionary();
             m_tileCount = 0;
             m_maxTileCount = m_width * m_height * m_layers;
