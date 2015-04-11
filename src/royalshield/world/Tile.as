@@ -76,7 +76,11 @@ package royalshield.world
             if (thing is Creature) {
                 if (hasFlag(TileFlags.SOLID) || m_firstCreature || m_creaturesCount >= MAX_CREATURES)
                     return false;
+            } else if (thing is Item) {
+                if (thing is Ground && thing == m_ground)
+                    return false;
             }
+            
             return true;
         }
         

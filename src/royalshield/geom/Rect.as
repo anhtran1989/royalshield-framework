@@ -1,5 +1,7 @@
 package royalshield.geom
 {
+    import flash.geom.Rectangle;
+
     public class Rect
     {
         //--------------------------------------------------------------------------
@@ -71,6 +73,12 @@ package royalshield.geom
             this.width = 0;
             this.height = 0;
             return this;
+        }
+        
+        public function copyToFlashRectangle(rectangle:Rectangle):Rectangle
+        {
+            rectangle.setTo(this.x, this.y, this.width, this.height);
+            return rectangle;
         }
         
         public function clone():Rect
